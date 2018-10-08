@@ -10,9 +10,9 @@ class UserSignupTest < ActionDispatch::IntegrationTest
 	  										email: " ",
 	  										password: "foo",
 	  									    password_confirmation: "bar" } }	
-	end
-	assert_template 'users/new'
-	assert_select 'div.error_explanation'
+  	end
+  	assert_template 'users/new'
+  	assert_select 'div.error_explanation'
   end
 
   test "valid signup" do
@@ -23,6 +23,7 @@ class UserSignupTest < ActionDispatch::IntegrationTest
   											password: "foobar",
   											password_confirmation: "foobar" } }
   	end
+    assert is_logged_in?
   	assert_not flash.empty?
   	follow_redirect!
   	assert_template 'users/show'

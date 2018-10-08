@@ -1,0 +1,4 @@
+Taro:
+  name: Taro Tanaka
+  email: taro@exmaple.com
+  password_digest: <%= User.digest("password") %>
