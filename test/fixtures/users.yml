@@ -1,4 +1,16 @@
 Taro:
   name: Taro Tanaka
-  email: taro@exmaple.com
+  email: taro@example.com
   password_digest: <%= User.digest("password") %>
+
+Hanako:
+  name: Hanako Nakata
+  email: hanako@example.com
+  password_digest: <%= User.digest("password") %>
+
+<% 30.times do |n| %>
+user_<%= n %>:
+  name: <%= "user-#{n}" %>
+  email: <%= "user-#{n}@example.com" %>
+  password_digest: <%= User.digest("password") %>
+<% end %>

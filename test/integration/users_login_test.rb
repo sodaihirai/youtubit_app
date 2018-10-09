@@ -29,6 +29,13 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
  	assert_not is_logged_in?
  end
 
+ test "successful login with friendly forwarding" do
+ 	get edit_user_path(@user)
+ 	assert_redirected_to login_url
+ 	log_in_as(@user)
+ 	assert_redirected_to edit_user_path(@user)
+ end
+
  test "login with remembering" do
  	log_in_as(@user, remember_me: '1')
  	assert_not_empty cookies['remember_token']

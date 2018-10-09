@@ -29,4 +29,17 @@ class UserSignupTest < ActionDispatch::IntegrationTest
   	assert_template 'users/show'
   end
 
+  test "valid unsubscribe" do
+    user = users(:Taro)
+    log_in_as(user)
+    get unsubscribe_user_path(user)
+    assert_template 'users/unsubscribe'
+    assert_select 'a', text: "アカウント削除"
+    assert_difference 'User.count', -1 do
+      delete user_path(user)
+    end
+    assert_not flash.empty?
+    assert_redirected_to root_url
+  end
+
 end
