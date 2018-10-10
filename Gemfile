@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-
+gem "letter_opener", :group => :development
 gem 'bootsnap'
 gem 'rails',        '5.2.1'
 gem 'faker',          '1.7.3'

@@ -1,0 +1,13 @@
+<h1>新しいパスワード設定</h1>
+<%= form_for(@user, url: password_reset_path(params[:id])) do |f| %>
+	
+	<%= hidden_field_tag :email, @user.email %>
+
+	<%= f.label :password %>
+	<%= f.password_field :password %>
+
+	<%= f.label :password_confirmation %>
+	<%= f.password_field :password_confirmation %>
+
+	<%= f.submit "パスワード変更", class: "btn btn-primary" %>
+<% end %>

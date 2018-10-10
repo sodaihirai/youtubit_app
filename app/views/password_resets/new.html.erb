@@ -1,0 +1,9 @@
+<!-- 後でhomeのアクションにした時の挙動を調べる　-->
+<h1>Passowrd Reset</h1>
+<%= form_for(:password_reset, url: password_resets_path) do |f| %>
+
+	<%= f.label :email %>
+	<%= f.email_field :email %>
+
+	<%= f.submit "メール送信", class: "btn btn-primary" %>
+<% end %>
