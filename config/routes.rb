@@ -22,4 +22,11 @@ Rails.application.routes.draw do
   resources :account_activations, only: [:edit]
   #password_resets
   resources :password_resets,     only: [:new, :create, :edit, :update]
+  #microposts
+  resources :microposts, only: [:show, :new, :create, :destroy] do
+    collection do
+      get :search
+    end
+  end
+
 end
