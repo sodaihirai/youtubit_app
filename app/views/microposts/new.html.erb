@@ -1,0 +1,18 @@
+<% provide(:title, "Post") %>
+<h1>投稿作成</h1>
+<%= form_for(@micropost) do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+
+	<%= f.label :content %>
+	<%= f.text_field :content %>
+
+	<%= f.label :video_type %>
+	<%= f.select :video_type, ['スポーツ', 'モチベーション'], prompt: "選択してください" %>
+
+	<%= f.hidden_field :video_title, value: @video_title %>
+	<%= f.hidden_field :video_thumbnail, value: @video_thumbnail %>
+	<%= f.hidden_field :channel_title, value: @channel_title %>
+	<%= f.hidden_field :video_url, value: @video_url %>
+
+	<%= f.submit "投稿", class: "btn btn-primary" %>
+<% end %>

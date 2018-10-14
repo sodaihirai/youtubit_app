@@ -8,13 +8,8 @@ class SessionsController < ApplicationController
   	if @user && @user.authenticate(params[:session][:password])
       if @user.activated?
   		  log_in @user
-        #下リファクタリングが出来る
-          if params[:session][:remember_me] == "1"
-            remember(@user)
-          else
-            forget(@user)
-          end
-  		  redirect_back_or @user
+        params[:session][:remember_me] == "1"? remember(@user) : forget(@user)
+        redirect_back_or @user
       else
         flash[:warning] = "アカウントが有効化されていません。メールの確認をしてください。"
         redirect_to root_url

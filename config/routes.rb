@@ -23,9 +23,10 @@ Rails.application.routes.draw do
   #password_resets
   resources :password_resets,     only: [:new, :create, :edit, :update]
   #microposts
-  resources :microposts, only: [:show, :new, :create, :destroy] do
+  resources :microposts, only: [:show, :new, :create, :destroy, :index] do
     collection do
-      get :search
+      get  :input
+      post :search
     end
   end
 

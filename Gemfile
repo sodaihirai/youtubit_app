@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'google-api-client', '~> 0.11'
+#本番環境にデプロイする時は以下のgemは外す
 gem "letter_opener", :group => :development
 gem 'bootsnap'
 gem 'rails',        '5.2.1'

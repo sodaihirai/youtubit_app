@@ -1,0 +1,9 @@
+<ul>
+	<li><%= link_to micropost.video_title, micropost.video_url, target: "_blank" %></li>
+	<li><%= image_tag(micropost.video_thumbnail, alt: "thumbnail", class: "thumbnail") %></li>
+	<li><%= micropost.video_type %></li>
+	<li><%= micropost.content %></li>
+	<% if current_user?(User.find(micropost.user_id)) %>
+		<li><%= link_to "削除", micropost_path(micropost.id), method: :delete %></li>
+	<% end %>
+</ul>
