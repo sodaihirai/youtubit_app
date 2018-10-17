@@ -1,19 +1,32 @@
 <% provide(:title, 'Edit') %>
 <h1>ユーザー編集</h1>
-<%= form_for(@user) do |f| %>
-	<%= render 'shared/error_messages', object: f.object %>
+<div class="row">
+	<div class="edit-form col-md-6 col-md-offset-3">
+		<%= form_for(@user) do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+			<div class="form-item field">
+				<%= f.label :name %>
+				<%= f.text_field :name %>				
+			</div>
 
-	<%= f.label :name %>
-	<%= f.text_field :name %>
+			<div class="form-item field">
+				<%= f.label :email %>
+				<%= f.email_field :email %>				
+			</div>
 
-	<%= f.label :email %>
-	<%= f.email_field :email %>
+			<div class="form-item field">
+				<%= f.label :password %>
+				<%= f.password_field :password %>				
+			</div>
 
-	<%= f.label :password %>
-	<%= f.password_field :password %>
+			<div class="form-item field">
+				<%= f.label :password_confirmation %>
+				<%= f.password_field :password_confirmation %>
+			</div>
 
-	<%= f.label :password_confirmation %>
-	<%= f.password_field :password_confirmation %>
-
-	<%= f.submit "ユーザー編集", class: "btn btn-primary" %>
-<% end %>
+			<div class="form-btn">	
+				<p><%= f.submit "ユーザー編集", class: "btn btn-primary submit-btn" %></p>
+			</div>
+		<% end %>
+	</div>
+</div>

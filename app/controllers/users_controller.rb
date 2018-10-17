@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:edit, :update, :index, :unsubscribe, :destroy]
+  before_action :logged_in_user, only: [:edit, :update, :index, :unsubscribe, :destroy, :followers, :following]
   before_action :correct_user, only: [:edit, :update, :unsubscribe, :destroy]
 
   def new
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @users = User.page(params[:page])
   end
 
   def show
@@ -46,6 +46,16 @@ class UsersController < ApplicationController
     session.delete(:user_id)
     flash[:success] = "アカウントを削除しました"
     redirect_to root_url
+  end
+
+  def followers
+    @user = User.find(params[:id])
+    @followers = @user.followers
+  end
+
+  def following
+    @user = User.find(params[:id])
+    @following = @user.following
   end
 
   private

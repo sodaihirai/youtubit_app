@@ -7,4 +7,9 @@ class Micropost < ApplicationRecord
 	validates :video_type, 		presence: true
 	validates :user_id, 		presence: true
 	validates :channel_title, 	presence: true
+	default_scope -> { order(created_at: :desc) }
+	
+	def contributor
+		User.find(self.user_id)
+	end
 end

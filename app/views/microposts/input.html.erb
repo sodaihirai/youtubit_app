@@ -1,37 +1,17 @@
 <% provide(:title, "micropost/search") %>
 <h1>Search</h1>
-<%= form_tag( search_microposts_path) do %>
-	<label for="keyword">検索keyword</label>
-	<%= text_field_tag :keyword %>
-	<%= submit_tag "検索" %>
-<% end %>
-<div>
-<% unless @movies.nil? %>
-	<ul>
-	<% @movies.each do |movie| %>
-		<li>
-			<ul>
-				<li>
-					<%= movie[:snippet][:title] %>
-				</li>
-				<li>
-					<%= image_tag(movie[:snippet][:thumbnails][:default][:url], alt: "thumbnail", class: "thumbnail") %>
-				</li>
-				<li>
-					<%= movie[:snippet][:channel_title] %> 
-				</li>
-				<li>
-					<%= link_to '視聴する', "https://www.youtube.com/watch?v=#{movie[:id][:video_id]}", target: "_blank" %>
-				</li>
-				<li>
-					<%= link_to "投稿する", new_micropost_url(video_title: movie[:snippet][:title],
-														       video_thumbnail: movie[:snippet][:thumbnails][:default][:url],
-														       channel_title:   movie[:snippet][:channel_title],
-														       video_url:       "https://www.youtube.com/watch?v=#{movie[:id][:video_id]}") %>
-				</li>
-			</ul>
-		</li>
-	<% end %>
-	</ul>
-<% end %>	
+<div class="row">
+	<div class="col-md-6"> 
+		<h3 class="non-items">検索結果</h3>
+		<div id="search-micropost-template">
+			<%= render 'search_micropost' %>
+		</div>
+	</div>
+	<div class="col-md-3 col-md-offset-3 search-form">
+		<%= form_tag( search_microposts_path, remote: true) do %>
+			<label for="keyword">検索keyword</label>
+			<%= text_field_tag :keyword %>
+			<%= submit_tag "検索" %>
+		<% end %>
+	</div>
 </div>

@@ -10,7 +10,10 @@ class User < ApplicationRecord
 	validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 	has_secure_password
 	has_many :microposts, dependent: :destroy
-
+	has_many :active_relationships, class_name: 'Relationship', foreign_key: "follower_id"
+	has_many :passive_relationships, class_name: 'Relationship', foreign_key: "followed_id"
+	has_many :following, through: :active_relationships,  source: :followed
+	has_many :followers, through: :passive_relationships, source: :follower
 	def User.digest(string)
 	    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
 	                                                  BCrypt::Engine.cost
@@ -54,11 +57,39 @@ class User < ApplicationRecord
 		self.update_attribute(:remember_digest, nil)
 	end
 
+	def follow(user)
+		self.following << user
+	end
+
+	def unfollow(relationship_id)
+		self.active_relationships.find(relationship_id).destroy
+	end
+
+	def follow?(user)
+		!active_relationships.find_by(followed_id: user.id).nil?
+	end
+
+	def following_count
+		active_relationships.count
+	end
+
+	def follower_count
+		passive_relationships.count
+	end
+
+	def feed
+	    following_ids = "SELECT followed_id FROM relationships
+	                     WHERE follower_id = :user_id"
+	    Micropost.where("user_id IN (#{following_ids})
+	                     OR user_id = :user_id", user_id: id)
+  	end	
+
 	def password_reset_expired?
 		if self.reset_sent_at < 2.hours.ago
 		　　flash[:warning] = "パスワード変更リンクが期限切れです"
 			redirect_to new_password_reset_path
 		end
 	end
+
 
 end

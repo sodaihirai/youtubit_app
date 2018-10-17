@@ -29,5 +29,7 @@ Rails.application.routes.draw do
       post :search
     end
   end
+  #relationships
+  resources :relationships, only: [:create, :destroy]
 
 end

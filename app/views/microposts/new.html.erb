@@ -1,18 +1,44 @@
 <% provide(:title, "Post") %>
 <h1>投稿作成</h1>
-<%= form_for(@micropost) do |f| %>
-	<%= render 'shared/error_messages', object: f.object %>
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		<div class="row">
+			<div class="col-md-4">
+				<h3 class="micropost-post-title">動画情報</h3>
+				<div class="micropost-video-info">
+					<p class="title">タイトル</p>
+					<p><%= @video_title %></p>
+					<p class="title">サムネイル</p>
+					<p><%= image_tag(@video_thumbnail) %></p>
+					<p class="title">チャンネル</p>
+					<p><%= @channel_title %></p>
+				</div>
+				
+			</div>
+			<div class="col-md-7 col-md-offset-1">
+				<h3 class="micropost-post-title">投稿内容</h3>
+				<%= form_for(@micropost) do |f| %>
+					<%= render 'shared/error_messages', object: f.object %>
+					<div class="form-item field">
+						<%= f.label :video_type, value: "ジャンル" %>
+						<%= f.select :video_type, ['スポーツ', 'モチベーション'], prompt: "選択してください" %>
+					</div>
 
-	<%= f.label :content %>
-	<%= f.text_field :content %>
+					<div class="form-item field">
+						<%= f.label :content, value: "コメント" %>
+						<%= f.text_area :content %>
+					</div>
 
-	<%= f.label :video_type %>
-	<%= f.select :video_type, ['スポーツ', 'モチベーション'], prompt: "選択してください" %>
 
-	<%= f.hidden_field :video_title, value: @video_title %>
-	<%= f.hidden_field :video_thumbnail, value: @video_thumbnail %>
-	<%= f.hidden_field :channel_title, value: @channel_title %>
-	<%= f.hidden_field :video_url, value: @video_url %>
-
-	<%= f.submit "投稿", class: "btn btn-primary" %>
-<% end %>
+					<%= f.hidden_field :video_title, value: @video_title %>
+					<%= f.hidden_field :video_thumbnail, value: @video_thumbnail %>
+					<%= f.hidden_field :channel_title, value: @channel_title %>
+					<%= f.hidden_field :video_url, value: @video_url %>
+					<div class="form-btn">
+						<p><%= f.submit "投稿", class: "btn btn-primary" %></p>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>

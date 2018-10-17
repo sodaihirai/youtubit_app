@@ -5,10 +5,24 @@
   -moz-box-sizing:    border-box;
   -webkit-box-sizing: border-box;
   box-sizing:         border-box;
+} 
+
+@mixin center-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin center-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 body {
   padding-top: 60px;
+  background-color: #FAFAFA;
 }
 
 section {
@@ -25,6 +39,19 @@ textarea {
 
 .center h1 {
   margin-bottom: 10px;
+}
+
+/* header */
+.header {
+  background-color: white;
+}
+
+.navbar_nav a {
+   color: #EEEEEE;
+}
+
+.header-link {
+  color: #999999;
 }
 
 /* footer */
@@ -54,6 +81,15 @@ h2 {
 p {
   font-size: 1.1em;
   line-height: 1.7em;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+ul {
+  list-style: none;
 }
 
 
@@ -92,3 +128,132 @@ footer {
   margin-top: 45px;
   @include box_sizing;
 }
+
+/* home */
+.main {
+  height: 600px;
+  .title {
+    height: 100%;
+    width: 100%;
+    @include center-column;
+    .youtubit {
+      font-size: 100px;
+      color: red;
+    }
+  }
+}
+
+.signup a {
+  color: #999999;
+}
+
+/* signup */
+
+.form-item {
+  margin-bottom: 30px;
+}
+
+.form-item.field input, select, textarea {
+  width: 100%;
+}
+
+.form-btn {
+    margin-top: 60px;
+  p {
+    @include center-row;
+  }
+}
+
+.submit-btn {
+  width: 50%;
+}
+
+/* login */
+#session_remember_me {
+  margin-left: 8px
+}
+
+/* micropost */
+.micropost-item {
+  border-top: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
+  margin: 10px 0;
+  padding: 10px 0; 
+  .micropost-title {
+    margin: 10px 0;
+     a {
+      font-size: 20px;
+      color: black;
+    }
+  }
+}
+
+.non-items {
+  text-align: center;
+}
+
+.non-items-title{
+  text-align: center;
+}
+
+.micropost-created_at {
+  margin-top: 20px;
+}
+
+.micropost-content {
+  background-color: white;
+  border: 1px solid #eaeaea;
+}
+
+
+/* _user */
+.user-item {
+  border-top: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
+  margin-bottom: 5px;
+}
+
+/* search */
+
+.movies-item {
+  border-top: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
+  margin: 10px 0;
+  padding: 10px 0;
+}
+
+.search-movie-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.search-form{
+  margin-top: 20px;
+  label, input {
+      display: block;
+      margin-bottom: 10px;
+  } 
+} 
+
+/* microposts/new */
+#micropost_content {
+  height: 150px;
+}
+
+.micropost-post-title {
+  text-align: center;
+}
+
+.micropost-video-info {
+  padding: 5px;
+  border: 1px solid #eaeaea;
+  .title {
+    font-weight: bold;
+  }
+}
+
+
+
+
+

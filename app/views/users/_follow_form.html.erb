@@ -1,0 +1,9 @@
+<div id="follow-form-javascipt">
+	<% if current_user != @user %>
+		<% if follow?(@user) %>
+			<%= render 'users/unfollow', user: @user %>
+		<% else %>
+			<%= render 'users/follow', user: @user %>
+		<% end %>
+	<% end %>
+</div>

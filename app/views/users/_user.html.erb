@@ -1,2 +1,11 @@
-<%= gravatar_for user, size: 50 %>
-<%= link_to "#{user.name}", user %>
+<div class="user-item">
+	<div class="row">
+		<div class="col-md-4">
+			<%= gravatar_for user %>
+		</div>
+		<div class="col-md-8">
+			<p><%= link_to "#{user.name}", user %></p>
+			<%= render 'shared/stats', user: user %>
+		</div>
+	</div>
+</div>

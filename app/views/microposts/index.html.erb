@@ -1,4 +1,6 @@
 <% provide(:title, "投稿一覧") %>
-<div>
-	<%= render @microposts %>
+<h1>投稿一覧</h1>
+<div id="destroy-javascript-micropost-index">
+	<%= render 'microposts/micropost', microposts: @microposts %>
+	<%= will_paginate %>
 </div>
