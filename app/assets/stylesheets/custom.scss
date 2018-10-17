@@ -205,6 +205,18 @@ footer {
   border: 1px solid #eaeaea;
 }
 
+.micropost-like {
+  margin-top: 20px;
+}
+
+.glyphicon.glyphicon-heart-empty, .glyphicon-heart {
+  font-size: 23px;
+}
+
+.glyphicon.glyphicon-heart {
+  color: #FFCCCC;
+}
+
 
 /* _user */
 .user-item {
@@ -252,6 +264,7 @@ footer {
     font-weight: bold;
   }
 }
+
 
 
 

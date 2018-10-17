@@ -5,7 +5,7 @@
 				<%= link_to micropost.video_title, micropost.video_url, target: "_blank" %>		
 			</li>	
 			<% if current_user?(User.find(micropost.user_id)) %>
-				<li class="col-md-2 col-md-offset-2"><%= link_to "削除", micropost_path(micropost.id), remote: true, method: :delete, class: "btn btn-danger" %></li>
+				<li class="col-md-2 col-md-offset-2"><%= link_to "削除", micropost_path(micropost.id), remote: true, method: :delete, class: "btn btn-danger", data:{ confirm: "削除してよろしいでしょうか?" } %></li>
 			<% end %>
 		</div>
 		<div class="row">
@@ -23,7 +23,11 @@
 					<div class="row">
 					<p class="col-md-6"><%= gravatar_for micropost.contributor, size: 50 %>
 						<%= link_to micropost.contributor.name, user_path(micropost.contributor) %></p>
-					<div class="col-md-4 col-md-offset-2 micropost-created_at"><%= micropost.created_at %></div>
+					<div class="col-md-2 micropost-like">
+						<%= render 'shared/like_form', micropost: micropost %>
+						<%= render 'shared/like_stats', micropost: micropost %>
+					</div>
+					<div class="col-md-4 micropost-created_at"><%= micropost.created_at %></div>
 					</div>
 				</li>
 			</div>

@@ -1,0 +1,2 @@
+$("#like-form-javascript-<%= @micropost.id %>").html('<%= escape_javascript(link_to "", likes_path(micropost_id: @micropost.id), method: :post, remote: true, class: "glyphicon glyphicon-heart-empty") %>');
+$("#like-stats-javascript-<%= @micropost.id %>").html('<%= @micropost.likes.count %>');

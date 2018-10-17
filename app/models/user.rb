@@ -14,6 +14,9 @@ class User < ApplicationRecord
 	has_many :passive_relationships, class_name: 'Relationship', foreign_key: "followed_id"
 	has_many :following, through: :active_relationships,  source: :followed
 	has_many :followers, through: :passive_relationships, source: :follower
+	has_many :likes, dependent: :destroy
+	#これがあるとmicropostでuserを求められる
+	#has_many :microposts, through: :likes, source: :micropost
 	def User.digest(string)
 	    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
 	                                                  BCrypt::Engine.cost
@@ -63,10 +66,6 @@ class User < ApplicationRecord
 
 	def unfollow(relationship_id)
 		self.active_relationships.find(relationship_id).destroy
-	end
-
-	def follow?(user)
-		!active_relationships.find_by(followed_id: user.id).nil?
 	end
 
 	def following_count

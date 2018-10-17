@@ -13,4 +13,9 @@ module MicropostsHelper
 		@channel_title = params[:micropost][:channel_title]
 		@video_url = params[:micropost][:video_url]
 	end
+
+	def like?(micropost)
+		!micropost.likes.find_by(user_id: current_user.id).nil?
+	end
+
 end

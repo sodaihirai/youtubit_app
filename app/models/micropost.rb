@@ -8,8 +8,16 @@ class Micropost < ApplicationRecord
 	validates :user_id, 		presence: true
 	validates :channel_title, 	presence: true
 	default_scope -> { order(created_at: :desc) }
+	has_many :likes, dependent: :destroy
+	has_many :like_users, through: :likes, source: :user
+
 	
 	def contributor
 		User.find(self.user_id)
 	end
+
+	def like(user)
+		likes.build(user_id: user.id)
+	end
+
 end

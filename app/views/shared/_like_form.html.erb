@@ -1,0 +1,7 @@
+<span id="<%= "like-form-javascript-#{micropost.id}" %>">
+	<% if like?(micropost) %>
+		<%= link_to "", like_url(micropost.likes.find_by(user_id: current_user.id)), method: :delete, remote: true, class: "glyphicon glyphicon-heart" %>
+	<% else %>
+		<%= link_to "", likes_url(micropost_id: micropost.id), method: :post, remote: true, class: "glyphicon glyphicon-heart-empty" %>
+	<% end %>
+</span>
