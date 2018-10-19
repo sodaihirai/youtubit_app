@@ -8,7 +8,8 @@ class MicropostTest < ActiveSupport::TestCase
                                                               video_url: "exmaple.com",
 		  								                                        video_thumbnail: "example.com",
 		  								                                        video_type: "example",
-                                                              channel_title: "example")
+                                                              channel_title: "example",
+                                                              channel_url: "exmaple.com")
   end
 
   test "should be valid" do

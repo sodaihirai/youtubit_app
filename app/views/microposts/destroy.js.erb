@@ -1,3 +1,3 @@
-$('#destroy-javascript-user-show').html("<%= escape_javascript(render 'microposts/micropost', { microposts: current_user.microposts }) %>" );
+$('#destroy-javascript-user-show').html("<%= escape_javascript(render 'microposts/micropost', { microposts: current_user.microposts.all }) %>" );
 $('#destroy-javascript-home').html("<%= escape_javascript(render 'microposts/micropost', { microposts: current_user.feed }) %>" );
-$('#destroy-javascript-micropost-index').html("<%= escape_javascript(render 'microposts/micropost', microposts: Micropost.all ) %>");
+$('#javascript-micropost-index').html("<%= escape_javascript(render 'microposts/micropost', microposts: Micropost.all ) %>");

@@ -1,17 +1,18 @@
 <% microposts.each do |micropost| %>
 	<ul class="micropost-item">
 		<div class="row">
-			<li class="col-md-8 micropost-title">
+			<li class="micropost-title">
 				<%= link_to micropost.video_title, micropost.video_url, target: "_blank" %>		
 			</li>	
-			<% if current_user?(User.find(micropost.user_id)) %>
-				<li class="col-md-2 col-md-offset-2"><%= link_to "削除", micropost_path(micropost.id), remote: true, method: :delete, class: "btn btn-danger", data:{ confirm: "削除してよろしいでしょうか?" } %></li>
+			<% if current_user?(User.find(micropost.user_id)) && yield(:title) ==  current_user.name %>
+				<li class="col-md-2 col-md-offset-2"><%= link_to "削除", micropost_path(micropost.id), method: :delete, class: "btn btn-danger", data:{ confirm: "削除してよろしいでしょうか?" } %></li>
 			<% end %>
 		</div>
 		<div class="row">
 			<div class="col-md-4">
 				<li><%= image_tag(micropost.video_thumbnail, alt: "thumbnail", class: "thumbnail") %></li>
-				<li><%= link_to "ジャンル: #{micropost.video_type}", "#" %></li>
+				<li>ジャンル:<%= link_to " #{micropost.video_type}", "#" %></li>
+				<li>チャンネル名:<%= link_to " #{micropost.channel_title}", micropost.channel_url, target: "_blank" %></li>
 			</div>
 			<div class="col-md-8">
 				<li>

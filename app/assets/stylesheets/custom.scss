@@ -222,7 +222,7 @@ footer {
 .user-item {
   border-top: 1px solid #eaeaea;
   border-bottom: 1px solid #eaeaea;
-  margin-bottom: 5px;
+  margin: 5px 0 ;
 }
 
 /* search */
@@ -264,6 +264,21 @@ footer {
     font-weight: bold;
   }
 }
+
+/* search-form */
+.form-search-anything {
+  display: inline-block;
+}
+
+.search-form-wrapper {
+  display: flex;
+}
+
+.search-dropdown {
+ margin-top: 10px;
+ margin-right: 5px;
+}
+
 
 
 

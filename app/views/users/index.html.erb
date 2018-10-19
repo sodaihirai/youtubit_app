@@ -1,7 +1,19 @@
 <% provide(:title, 'Index') %>
 <h1>ユーザー一覧</h1>
 <div class="row">
-	<div class="col-md-6 col-md-offset-3">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-6 search-form-wrapper">
+			<%= form_tag(index_search_users_path, remote: true) do %>
+				<span class="form-search-anything">
+		 			<%= search_field_tag "q", params[:q], class: "form-control", placeholder: "ユーザー名検索" %>
+				</span>
+				<span class="form-search-anything">
+		 			<%= submit_tag "検索", class: "btn btn-default" %>
+				</span>
+			<% end %>
+		</div>
+	</div>
+	<div class="col-md-6 col-md-offset-3" id="javascript-users-index">
 		<% if @users.any? %>
 			<%= render @users %>
 		<% end %>

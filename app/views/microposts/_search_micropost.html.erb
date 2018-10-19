@@ -18,7 +18,8 @@
 						<%= link_to "投稿する", new_micropost_url(video_title: movie[:snippet][:title],
 															       video_thumbnail: movie[:snippet][:thumbnails][:default][:url],
 															       channel_title:   movie[:snippet][:channel_title],
-															       video_url:       "https://www.youtube.com/watch?v=#{movie[:id][:video_id]}"),
+															       video_url:       "https://www.youtube.com/watch?v=#{movie[:id][:video_id]}",
+															       channel_url:     "https://www.youtube.com/channel/#{movie[:snippet][:channel_id]}"),
 															       class: "btn btn-primary" %>
 					</li>
 				</div>

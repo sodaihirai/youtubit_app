@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     member do
       get :following, :followers, :unsubscribe
     end
+    collection do
+      post :index_search
+    end
   end
   #sessions
   get    '/login',       to: 'sessions#new'
@@ -27,6 +30,7 @@ Rails.application.routes.draw do
     collection do
       get  :input
       post :search
+      post :index_search
     end
   end
   #relationships

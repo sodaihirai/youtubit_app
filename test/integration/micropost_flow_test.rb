@@ -21,25 +21,26 @@ class MicropostFlowTest < ActionDispatch::IntegrationTest
   	video_thumbnail = "icon.png"
   	channel_title = "channel_title"
   	video_url = "video_url"
-  	get new_micropost_path(video_title: video_title, video_thumbnail: video_thumbnail, channel_title: channel_title, video_url: video_url)
+    channel_url = "channel_url"
+  	get new_micropost_path(video_title: video_title, video_thumbnail: video_thumbnail, channel_title: channel_title, video_url: video_url, channel_url: channel_url)
   	assert_template 'microposts/new'
   	content = "exmaple"
   	video_type = "sports"
   	#contentが空
   	assert_no_difference '@user.microposts.count' do
-  		post microposts_path, params: { micropost: { content: " ", video_type: video_type, video_title: video_title, video_thumbnail: video_thumbnail, channel_title: channel_title, video_url: video_url, user_id: @user.id } }
+  		post microposts_path, params: { micropost: { content: " ", video_type: video_type, video_title: video_title, video_thumbnail: video_thumbnail, channel_title: channel_title, video_url: video_url, user_id: @user.id, channel_url: channel_url } }
   	end
   	assert_select 'div.error_explanation'
   	assert_template 'microposts/new'
   	#video_typeが空
   	assert_no_difference '@user.microposts.count' do
-  		post microposts_path, params: { micropost: { content: content, video_type: " ", video_title: video_title, video_thumbnail: video_thumbnail, channel_title: channel_title, video_url: video_url, user_id: @user.id } }
+  		post microposts_path, params: { micropost: { content: content, video_type: " ", video_title: video_title, video_thumbnail: video_thumbnail, channel_title: channel_title, video_url: video_url, user_id: @user.id, channel_url: channel_url } }
   	end
   	assert_select 'div.error_explanation'
   	assert_template 'microposts/new'
   	#どちらも正しい
   	assert_difference '@user.microposts.count', 1 do
-  		post microposts_path, params: { micropost: { content: content, video_type: video_type, video_title: video_title, video_thumbnail: video_thumbnail, channel_title: channel_title, video_url: video_url, user_id: @user.id } }
+  		post microposts_path, params: { micropost: { content: content, video_type: video_type, video_title: video_title, video_thumbnail: video_thumbnail, channel_title: channel_title, video_url: video_url, user_id: @user.id, channel_url: channel_url } }
   	end
   	@micropost = assigns(:micropost)
   	@micropost.reload
