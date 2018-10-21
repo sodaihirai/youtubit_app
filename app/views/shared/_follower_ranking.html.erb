@@ -1,0 +1,12 @@
+<% if !@third_follower_counts_users.nil? %>
+		<% @third_follower_counts_users.each do |user| %>
+		<p>
+			<p class="ranking-order"><%= "#{ranking_order(user.followers.count, @third_counts_of_follower_count)}位"%></p>
+			<%= gravatar_for(user, size: 30) %>
+			<p class="ranking-user-name"><%= link_to user.name, user %></p>
+			<p><%= "フォロワー数:#{user.followers.count}" %></p>
+		</p>
+		<% end %>
+<% else %>
+	<p>フォローしましょう。</p>
+<% end %>

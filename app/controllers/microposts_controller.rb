@@ -8,7 +8,6 @@ class MicropostsController < ApplicationController
 	end
 
 	def search
-		#params[:keyword]がnilの時の条件分岐
 		if !params[:keyword].blank?
 			require 'google/apis/youtube_v3'
 			youtube = Google::Apis::YoutubeV3::YouTubeService.new
@@ -59,7 +58,6 @@ class MicropostsController < ApplicationController
 		if @micropost = current_user.microposts.find(params[:id])
 			@micropost.destroy
 			flash[:success] = "削除に成功しました。"
-			#投稿一覧から消した時は、投稿一覧に戻りたい
 			redirect_to current_user
 		end
 	end
@@ -71,155 +69,62 @@ class MicropostsController < ApplicationController
 		if params[:video_type].nil? || params[:video_type] == "全ジャンル"
 			if params[:sort_version].nil? || params[:sort_version] == "post_created_at"
 				@microposts = Micropost.page(params[:page])
-				if params[:search_version].nil? || params[:search_version] == "content"
-					@search_version_jp = "コメント"
-				elsif params[:search_version] == "video_title"
-					@search_version_jp = "ビデオタイトル"
-				elsif params[:search_version] == "channel_title"
-					@search_version_jp = "チャンネルタイトル"
-				end
+				micropost_search_version_jp
 			elsif params[:sort_version] == "like_count"
-				micropost_like_count = Micropost.joins(:likes).group(:micropost_id).count
-	 			micropost_liked_ids = Hash[micropost_like_count.sort_by{ |_, v| -v }].keys
-				@microposts = Micropost.where(id: micropost_liked_ids).page(params[:page])
-				if params[:search_version].nil? || params[:search_version] == "content"
-					@search_version_jp = "コメント"
-				elsif params[:search_version] == "video_title"
-					@search_version_jp = "ビデオタイトル"
-				elsif params[:search_version] == "channel_title"
-					@search_version_jp = "チャンネルタイトル"
-				end
+				set_micropost_liked_ids
+				@microposts = Micropost.where(id: @micropost_liked_ids).page(params[:page])
+				micropost_search_version_jp
 			end
 		else
 			if params[:sort_version].nil? || params[:sort_version] == "post_created_at"
 				@microposts = Micropost.where('video_type = ?',params[:video_type]).page(params[:page])
-				if params[:search_version].nil? || params[:search_version] == "content"
-					@search_version_jp = "コメント"
-				elsif params[:search_version] == "video_title"
-					@search_version_jp = "ビデオタイトル"
-				elsif params[:search_version] == "channel_title"
-					@search_version_jp = "チャンネルタイトル"
-				end
+				micropost_search_version_jp
 			elsif params[:sort_version] == "like_count"
-				micropost_like_count = Micropost.joins(:likes).group(:micropost_id).count
-	 			micropost_liked_ids = Hash[micropost_like_count.sort_by{ |_, v| -v }].keys
-				@microposts = Micropost.where('id IN (?) AND video_type = ?', micropost_liked_ids, params[:video_type]).page(params[:page])
-				if params[:search_version].nil? || params[:search_version] == "content"
-					@search_version_jp = "コメント"
-				elsif params[:search_version] == "video_title"
-					@search_version_jp = "ビデオタイトル"
-				elsif params[:search_version] == "channel_title"
-					@search_version_jp = "チャンネルタイトル"
-				end
+				set_micropost_liked_ids
+				@microposts = Micropost.where('id IN (?) AND video_type = ?', @micropost_liked_ids, params[:video_type]).page(params[:page])
+				micropost_search_version_jp
 			end
 		end
 	end
 
 	def index_search
-		#ジャンル指定がない
 		if params[:video_type].empty? || params[:video_type] == "全ジャンル"
-			#ジャンル指定がなく、フィルター指定もない
 			if params[:sort_version].empty? || params[:sort_version] == "post_created_at"
-				if params[:search_version].empty? || params[:search_version] == "content"
-					params[:q]? @microposts = Micropost.search_by_content(params[:q]).page(params[:page]) : @microposts = Micropost.page(params[:page])			
-					@search_version_jp = "コメント"
-					respond_to do |format|
-						format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
-						format.js
-					end
-				elsif params[:search_version] == "video_title"
-					params[:q]? @microposts = Micropost.search_by_video_title(params[:q]).page(params[:page]) : @microposts = Micropost.page(params[:page])
-					@search_version_jp = "ビデオタイトル"
-					respond_to do |format|
-						format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
-						format.js
-					end
-				elsif params[:search_version] == "channel_title"
-					params[:q]? @microposts = Micropost.search_by_channel_title(params[:q]).page(params[:page]) : @microposts = Micropost.page(params[:page])
-					@search_version_jp = "チャンネルタイトル"
-					respond_to do |format|
-						format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
-						format.js
-					end
-				end
-				#ジャンル指定がなく、フィルター指定はある。
+				params[:search_version].empty? ? search_version = "content" : search_version = params[:search_version]
+			    @microposts = Micropost.search_by_parameter_with_pagination(search_version, params[:q], params[:page])
+			    respond_to do |format|
+					format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
+					format.js
+			    end
+				micropost_search_version_jp
 			elsif params[:sort_version] == "like_count"
-				 micropost_like_count = Micropost.joins(:likes).group(:micropost_id).count
-	 			 micropost_liked_ids = Hash[micropost_like_count.sort_by{ |_, v| -v }].keys
-				if params[:search_version].empty? || params[:search_version] == "content"
-					params[:q]? @microposts = Micropost.search_by_content_sort_by_like(params[:q], micropost_liked_ids).page(params[:page]) : @microposts = Micropost.where(id: micropost_liked_ids).page(params[:page])			
-					@search_version_jp = "コメント"
-					respond_to do |format|
-						format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
-						format.js
-					end
-				elsif params[:search_version] == "video_title"
-					params[:q]? @microposts = Micropost.search_by_video_title_sort_by_like(params[:q], micropost_liked_ids).page(params[:page]) : @microposts = Micropost.where(id: micropost_liked_ids).page(params[:page])
-					@search_version_jp = "ビデオタイトル"
-					respond_to do |format|
-						format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
-						format.js
-					end
-				elsif params[:search_version] == "channel_title"
-					params[:q]? @microposts = Micropost.search_by_channel_title_sort_by_like(params[:q], micropost_liked_ids).page(params[:page]) : @microposts = Micropost.where(id: micropost_liked_ids).page(params[:page])
-					@search_version_jp = "チャンネルタイトル"
-					respond_to do |format|
-						format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
-						format.js
-					end
-				end
+				set_micropost_liked_ids
+			    params[:search_version].empty? ? search_version = "content" : search_version = params[:search_version]
+			    @microposts = Micropost.search_by_parameter_sort_by_like_with_pagination(search_version, params[:q], @micropost_liked_ids, params[:page])
+			    respond_to do |format|
+					format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
+					format.js
+			    end
+				micropost_search_version_jp			   
 			end
-		else #ジャンル指定がある
-			#フィルター指定がない
+		else 
 			if params[:sort_version].empty? || params[:sort_version] == "post_created_at"
-				if params[:search_version].empty? || params[:search_version] == "content"
-					params[:q]? @microposts = Micropost.search_by_content_sort_by_video_type(params[:q], params[:video_type]).page(params[:page]) : @microposts = Micropost.page(params[:page])			
-					@search_version_jp = "コメント"
-					respond_to do |format|
-						format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
-						format.js
-					end
-				elsif params[:search_version] == "video_title"
-					params[:q]? @microposts = Micropost.search_by_video_title_sort_by_video_type(params[:q], params[:video_type]).page(params[:page]) : @microposts = Micropost.page(params[:page])
-					@search_version_jp = "ビデオタイトル"
-					respond_to do |format|
-						format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
-						format.js
-					end
-				elsif params[:search_version] == "channel_title"
-					params[:q]? @microposts = Micropost.search_by_channel_title_sort_by_video_type(params[:q], params[:video_type]).page(params[:page]) : @microposts = Micropost.page(params[:page])
-					@search_version_jp = "チャンネルタイトル"
-					respond_to do |format|
-						format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
-						format.js
-					end
-				end
-				#ジャンル指定があり、フィルター指定もある。
+				params[:search_version].empty? ? search_version = "content" : search_version = params[:search_version]
+				@microposts = Micropost.search_by_parameter_sort_by_video_type_with_pagination(search_version, params[:q], params[:video_type], params[:page])
+			    respond_to do |format|
+					format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
+					format.js
+			    end
+				micropost_search_version_jp			   
 			elsif params[:sort_version] == "like_count"
-				 micropost_like_count = Micropost.joins(:likes).group(:micropost_id).count
-	 			 micropost_liked_ids = Hash[micropost_like_count.sort_by{ |_, v| -v }].keys
-				if params[:search_version].empty? || params[:search_version] == "content"
-					params[:q]? @microposts = Micropost.search_by_content_sort_by_like_and_video_type(params[:q], micropost_liked_ids, params[:video_type]).page(params[:page]) : @microposts = Micropost.where(id: micropost_liked_ids).page(params[:page])			
-					@search_version_jp = "コメント"
-					respond_to do |format|
-						format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
-						format.js
-					end
-				elsif params[:search_version] == "video_title"
-					params[:q]? @microposts = Micropost.search_by_video_title_sort_by_like_and_video_type(params[:q], micropost_liked_ids, params[:video_type]).page(params[:page]) : @microposts = Micropost.where(id: micropost_liked_ids).page(params[:page])
-					@search_version_jp = "ビデオタイトル"
-					respond_to do |format|
-						format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
-						format.js
-					end
-				elsif params[:search_version] == "channel_title"
-					params[:q]? @microposts = Micropost.search_by_channel_title_sort_by_like_and_video_type(params[:q], micropost_liked_ids, params[:video_type]).page(params[:page]) : @microposts = Micropost.where(id: micropost_liked_ids).page(params[:page])
-					@search_version_jp = "チャンネルタイトル"
-					respond_to do |format|
-						format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
-						format.js
-					end
-				end
+				set_micropost_liked_ids
+				params[:search_version].empty? ? search_version = "content" : search_version = params[:search_version]
+				@microposts = Micropost.search_by_parameter_sort_by_like_and_video_type_with_pagination(search_version, params[:q], @micropost_liked_ids, params[:video_type], params[:page])
+			    respond_to do |format|
+					format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
+					format.js
+			    end
+				micropost_search_version_jp			   
 			end
 		end
 	end

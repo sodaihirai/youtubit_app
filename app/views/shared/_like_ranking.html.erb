@@ -1,0 +1,15 @@
+<%= third_counts_of_likes_count %>
+<% if !third_likes_counts_microposts.nil? %>
+		<% third_likes_counts_microposts.each do |micropost| %>
+			<p>
+				<p class="ranking-order"><%="#{ranking_order(micropost.likes_count, third_counts_of_likes_count)}位"  %></p>
+				<%= micropost.video_title %>
+				<%= micropost.content %>
+				<%= micropost.created_at %>
+				<%= micropost.likes_count %>
+				<%= micropost.contributor.name %>
+			</p	>
+		<% end %>
+<% else %>
+	<p>いいねをしましょう。</p>
+<% end %>

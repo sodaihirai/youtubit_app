@@ -1,0 +1,12 @@
+<% if !@video_title_counts_third.nil? %>
+	<% @video_title_counts_third.each do |key, value| %>
+		<p>
+			<p class="ranking-order"><%= "#{ranking_order(value, @third_posted_counts)}位" %></p>	
+			<p class="ranking-video-title"><%= link_to key, video_url(key), target:"_blank"  %></p>
+			<%= image_tag(video_thumbnail(key)) %>
+			<p><%= "投稿数: #{value}" %></p>
+		</p>
+	<% end %>
+<% else %>
+	<p>投稿がありません。</p>
+<% end %>

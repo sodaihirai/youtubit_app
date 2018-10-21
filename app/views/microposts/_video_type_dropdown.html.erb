@@ -1,0 +1,14 @@
+<div class="dropdown search-dropdown">
+    <a href="#" class="dropdown-toggle header-link" data-toggle="dropdown">
+      ジャンル <b class="caret"></b>
+    </a>
+    <!-- 検索のコントローラーとビューを編集 -->
+    <ul class="dropdown-menu">
+      <li><%= link_to "全ジャンル",  microposts_path(sort_version: params[:sort_version], search_version: params[:search_version],
+      		 video_type: "全ジャンル") %></li>	
+      <li><%= link_to "スポーツ",  microposts_path(sort_version: params[:sort_version], search_version: params[:search_version],
+      		 video_type: "スポーツ") %></li>	
+      <li><%= link_to "モチベーション", microposts_path(sort_version: params[:sort_version], search_version: params[:search_version],
+      		 video_type: "モチベーション") %></li>
+     </ul>
+</div>

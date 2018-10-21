@@ -1,2 +1,3 @@
 $("#like-form-javascript-<%= @micropost.id %>").html('<%= escape_javascript(link_to "", like_path(@micropost.likes.find_by(user_id: current_user.id)), method: :delete, remote: true, class: "glyphicon glyphicon-heart") %> ');
 $("#like-stats-javascript-<%= @micropost.id %>").html('<%= @micropost.likes.count %>');
+$("#javascript-like-ranking").html('<%= escape_javascript(render "shared/like_ranking", third_counts_of_likes_count: @third_counts_of_likes_count, third_likes_counts_microposts: @third_likes_counts_microposts) %>');

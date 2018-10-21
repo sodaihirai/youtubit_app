@@ -5,6 +5,8 @@ class LikesController < ApplicationController
 		@micropost = Micropost.find(params[:micropost_id])
 		@like = @micropost.like(current_user)
 		if @like.save
+			@third_counts_of_likes_count = Micropost.set_third_counts_of_likes_count
+			@third_likes_counts_microposts = Micropost.set_third_likes_counts_microposts if any_liked_microposts?
 			respond_to do |format|
 				format.html { redirect_to request.referer }
 				format.js
@@ -19,6 +21,8 @@ class LikesController < ApplicationController
 		@micropost = Micropost.find(@like.micropost.id)
 		if @like
 			@like.destroy
+			@third_counts_of_likes_count = Micropost.set_third_counts_of_likes_count
+			@third_likes_counts_microposts = Micropost.set_third_likes_counts_microposts if any_liked_microposts?
 			respond_to do |format|
 				format.html { redirect_to request.referer }
 				format.js

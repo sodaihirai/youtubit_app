@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
 
 	include SessionsHelper
+	include MicropostsHelper
+	include StaticPagesHelper
 
 	private
 		def logged_in_user

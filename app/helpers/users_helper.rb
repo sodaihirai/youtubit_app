@@ -9,4 +9,8 @@ module UsersHelper
 	def follow?(user)
 		!current_user.active_relationships.find_by(followed_id: user.id).nil?
 	end
+
+	def any_follow?
+		!User.where.not(follower_count: 0).group(:follower_count).max(3).first.nil?
+	end
 end

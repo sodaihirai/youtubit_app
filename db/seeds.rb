@@ -24,12 +24,12 @@ users = User.order(:created_at).take(6)
   users.each do |user|
     user.microposts.create!(content: content,
                             video_title: "Navy Seal Commander explains why wake up at 4am",
-                            video_url: "https://www.youtube.com/channel/UCtinbF-Q-fVthA0qrFQTgXQ",
-                            video_thumbnail: "https://i.ytimg.com/vi/C-Cvl3_CH2A/default.jpg",
-                            video_type: "モチベーション",
-                            channel_title: "CaseyNeistat",
-                            channel_url: "https://www.youtube.com/channel/UCtinbF-Q-fVthA0qrFQTgXQ"
-                            )
+                            video_url: "https://www.youtube.com/watch?v=C-Cvl3_CH2A&t=366s",
+                          video_thumbnail: "https://i.ytimg.com/vi/C-Cvl3_CH2A/default.jpg",
+                          video_type: "モチベーション",
+                          channel_title: "CaseyNeistat",
+                          channel_url: "https://www.youtube.com/channel/UCtinbF-Q-fVthA0qrFQTgXQ"
+                         )
   end
 end
 

@@ -39,9 +39,7 @@ class PasswordResetsController < ApplicationController
 	private
 		def get_user
 			@user = User.find_by(email: params[:email])
-			if @user.nil?
-				redirect_to root_url
-			end
+			redirect_to root_url if @user.nil?
 		end
 
 		def user_params

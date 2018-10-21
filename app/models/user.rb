@@ -92,5 +92,10 @@ class User < ApplicationRecord
 		end
 	end
 
+	def User.set_third_follower_counts_users
+		third_counts_of_follower_count = User.where.not(follower_count: 0).order(follower_count: :desc).map{ |user| user.follower_count}.uniq.last
+		where('follower_count >= ?', third_counts_of_follower_count).order(follower_count: :desc)
+	end
+
 
 end
