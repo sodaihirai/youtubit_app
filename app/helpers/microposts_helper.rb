@@ -44,8 +44,8 @@ module MicropostsHelper
 	end
 
 	def set_video_title_counts_third
-		@third_posted_counts = Micropost.group(:video_title).count.values.uniq.max(3)
 		micropost_video_title_count = Micropost.group(:video_title).count
+		@third_posted_counts = micropost_video_title_count.values.uniq.max(3)
 		video_title_counts = Hash[micropost_video_title_count.sort_by{ |_, v| -v }]
 		return Hash[video_title_counts.take_while{ |k, v| v >= @third_posted_counts.last }]
 	end

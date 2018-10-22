@@ -73,7 +73,7 @@ class Micropost < ApplicationRecord
 	end
 
 	def self.set_third_likes_counts_microposts
-		third_counts_of_likes_count = Micropost.where.not(likes_count: 0).order(likes_count: :asc).map{ |micropost| micropost.likes_count }.uniq.last
+		third_counts_of_likes_count = Micropost.where.not(likes_count: 0).order(likes_count: :asc).map{ |micropost| micropost.likes_count }.uniq.max(3).last
 		Micropost.where('likes_count >= ?', third_counts_of_likes_count).order(likes_count: :desc)
 	end
 
