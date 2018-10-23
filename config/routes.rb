@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   
+  
   #static_pages
   root 'static_pages#home'
   get '/about', 	    to: 'static_pages#about'
@@ -11,7 +12,7 @@ Rails.application.routes.draw do
   #get '/unsubscribe', to: 'users#unsubscribe'
   resources :users do
     member do
-      get :following, :followers, :unsubscribe
+      get :following, :followers, :unsubscribe, :chat, :chat_index
     end
     collection do
       post :index_search
@@ -38,4 +39,5 @@ Rails.application.routes.draw do
   #likes
   resources :likes, only: [:create, :destroy]
 
+  mount ActionCable.server => '/cable'
 end

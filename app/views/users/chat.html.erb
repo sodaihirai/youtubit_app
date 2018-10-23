@@ -1,0 +1,21 @@
+<% if !current_user?(@user) && logged_in? %>
+    <section class="message_box">
+      <div id="messages">
+        <%= render @messages %>
+      </div>
+    </section>
+    <script type="text/javascript">
+      var height = 0;
+      $("div.message").each( function() {
+        height += ($(this).height());
+      });
+      $('section.message_box').scrollTop(height);
+    </script>
+    <div class="message_form">
+     <%= render 'messages/message_form',
+       {from_user: current_user, to_user: @user, room_id: @room_id} %>
+    </div>
+    <div>
+      <%= link_to "メッセージ一覧へ", chat_index_user_path(current_user) %>
+    </div>
+<% end %>			

@@ -291,6 +291,41 @@ footer {
  margin-right: 5px;
 }
 
+/* message */
+section.message_box {
+  padding: 10px;
+  border: 1px solid $gray-light;
+  overflow: scroll;
+  #messages {
+    height: 400px;
+  }
+}
+
+div.message_form {
+  padding-top: 10px;
+}
+
+#message_sender {
+  font-size: 1.1em;
+}
+
+#message_content {
+  font-size: 1.0em;
+}
+
+.user-show-message-item {
+  border-top: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
+  margin-bottom: 5px;
+  padding: 3px;
+}
+
+.message-index-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+
 
 
 

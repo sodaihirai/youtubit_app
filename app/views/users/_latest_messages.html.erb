@@ -1,0 +1,16 @@
+<% @latest_message_each_room.each do |message| %>
+	<div class="user-show-message-item">
+		<p>
+			<% if message.from_id == current_user.id %>
+				<%= gravatar_for( User.find(message.to_id), size: 40) %>
+				<%= link_to User.find(message.to_id).name, user_path(User.find(message.to_id))  %>
+				<p><%= link_to message.content, chat_user_path(User.find(message.to_id)) %></p>
+			<% else %>
+				<%= gravatar_for( User.find(message.from_id), size: 40) %>
+				<%= link_to User.find(message.from_id).name, user_path(User.find(message.from_id)) %>
+				<p><%= link_to message.content, chat_user_path(User.find(message.to_id)) %></p>				
+			<% end %>
+		</p>
+		<span><%= message.created_at %></span>
+	</div>
+<% end %>

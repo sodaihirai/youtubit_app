@@ -9,16 +9,23 @@ class User < ApplicationRecord
 	                                  uniqueness:  { case_sensitive: false }
 	validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 	has_secure_password
+
 	has_many :microposts, dependent: :destroy
+
 	has_many :active_relationships, class_name: 'Relationship', foreign_key: "follower_id"
 	has_many :passive_relationships, class_name: 'Relationship', foreign_key: "followed_id"
 	has_many :following, through: :active_relationships,  source: :followed
 	has_many :followers, through: :passive_relationships, source: :follower
+
 	has_many :likes, dependent: :destroy
+
 	scope :search_by_user_name, -> (keyword) {
     where("users.name LIKE :keyword", keyword: "%#{sanitize_sql_like(keyword)}%") if keyword.present? }
 	#これがあるとmicropostでuserを求められる
 	#has_many :microposts, through: :likes, source: :micropost
+	has_many :from_messages, class_name: "Message", foreign_key: "from_id", dependent: :destroy
+	has_many :to_messages, class_name: "Message", foreign_key: "to_id", dependent: :destroy
+
 	def User.digest(string)
 	    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
 	                                                  BCrypt::Engine.cost
@@ -100,6 +107,12 @@ class User < ApplicationRecord
 		third_counts_of_follower_count = User.where.not(follower_count: 0).order(follower_count: :desc).map{ |user| user.follower_count}.uniq.max(3).last
 		where('follower_count >= ?', third_counts_of_follower_count).order(follower_count: :desc)
 	end
+
+	def send_message(other_user, room_id, content)
+		from_messages.create!(to_id: other_user.id, room_id: room_id, content: content)
+	end
+
+	
 
 
 end

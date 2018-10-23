@@ -24,6 +24,7 @@
             <ul class="dropdown-menu">
               <li><%= link_to "プロフィール", current_user, class: "header-link" %></li>
               <li><%= link_to "プロフィール編集", edit_user_path(current_user), class: "header-link" %></li>
+              <li><%= link_to "メッセージ一覧", chat_index_user_path(current_user), class: "header-link" %></li>
               <li class="divider"></li>
               <li><%= link_to "ログアウト", logout_path, method: :delete, class: "header-link" %></li>
               <li><%= link_to "登録解除", unsubscribe_user_path(current_user), class: "header-link", data:{ confirm: "登録解除してよろしいでしょうか?" } %></li>

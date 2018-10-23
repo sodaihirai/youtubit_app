@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:edit, :update, :index, :unsubscribe, :destroy, :followers, :following, :index_search]
-  before_action :correct_user, only: [:edit, :update, :unsubscribe, :destroy]
+  before_action :logged_in_user, only: [:edit, :update, :index, :unsubscribe, :destroy, :followers, :following, :index_search, :chat, :chat_index]
+  before_action :correct_user, only: [:edit, :update, :unsubscribe, :destroy, :chat_index]
+  before_action :yourself, only: [:chat]
 
   def new
   	@user = User.new
@@ -32,6 +33,13 @@ class UsersController < ApplicationController
   def show
   	@user = User.find(params[:id])
     @microposts = @user.microposts.all
+    if current_user?(@user) 
+      @latest_three_room_ids = Message.where(from_id: current_user.id).or(Message.where(to_id: current_user.id)).group(:room_id).order(created_at: :desc).first(3)
+      @latest_message_each_room = []
+      @latest_three_room_ids.count.times do |n|
+        @latest_message_each_room << Message.where(room_id: @latest_three_room_ids[n].room_id).last
+      end
+    end
   end
 
   def edit
@@ -66,6 +74,23 @@ class UsersController < ApplicationController
     @following = @user.following
   end
 
+  def chat
+      @user = User.find(params[:id])
+      @room_id = message_room_id(current_user, @user)
+      @messages = Message.recent_in_room(@room_id)
+  end
+
+  def chat_index
+    @user = User.find(params[:id])
+    if current_user?(@user)
+      @latest_room_ids = Message.where(from_id: current_user.id).or(Message.where(to_id: current_user.id)).group(:room_id).order(created_at: :desc)
+      @latest_message_each_room = []
+      @latest_room_ids.count.count.times do |n|
+        @latest_message_each_room << Message.where(room_id: @latest_room_ids[n].room_id).last
+      end
+    end
+  end
+
   private
   	def user_params
   		params.require(:user).permit(:email, :name,
@@ -80,4 +105,21 @@ class UsersController < ApplicationController
         redirect_to root_url
       end
     end
+
+    def yourself
+      @user = User.find(params[:id])
+      if current_user?(@user)
+        flash[:danger] = "正しいユーザーではありません"
+        redirect_to root_url
+      end
+    end
+
+    def message_room_id(first_user, second_user)
+      if first_user.id < second_user.id
+        "#{first_user.id}-#{second_user.id}"
+      else
+        "#{second_user.id}-#{first_user.id}"
+      end
+    end
+
 end
