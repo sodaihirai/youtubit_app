@@ -1,15 +1,20 @@
 <%= third_counts_of_likes_count %>
 <% if !third_likes_counts_microposts.nil? %>
-		<% third_likes_counts_microposts.each do |micropost| %>
+	<% third_likes_counts_microposts.each do |micropost| %>
+		<div class="like-ranking-micropost-item">
 			<p>
 				<p class="ranking-order"><%="#{ranking_order(micropost.likes_count, third_counts_of_likes_count)}位"  %></p>
-				<%= micropost.video_title %>
-				<%= micropost.content %>
-				<%= micropost.created_at %>
-				<%= micropost.likes_count %>
-				<%= micropost.contributor.name %>
+				<p><%= "ビデオタイトル: #{micropost.video_title}" %></p>
+				<p><%= "コメント: #{micropost.content} " %></p>
+				<p><%= "投稿時間: #{micropost.created_at}" %></p>
+				<p><%= "いいね数: #{micropost.likes_count}" %></p>
+				<div class="row">
+					<p class="col-md-6"><%= "投稿者: #{micropost.contributor.name}" %></p>
+					<p class="col-md-4 col-md-offset-2"><%= link_to "投稿へ", micropost_path(micropost) %></p>
+				</div>
 			</p	>
-		<% end %>
+		</div>
+	<% end %>
 <% else %>
 	<p>いいねをしましょう。</p>
 <% end %>

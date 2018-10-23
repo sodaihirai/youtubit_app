@@ -1,5 +1,5 @@
 <% provide(:title, @user.name) %>
-<h1>Profile</h1>
+<h1>プロフィール</h1>
 <div class="row">
 		<div class="col-md-8">
 			<h3 class="non-items">投稿</h3>
@@ -31,14 +31,8 @@
 					<%= link_to "チャットする", chat_user_path(@user) %>
 				<% else %>
 					<h2>最近のメッセージ</h2>
-					<% @latest_three_room_ids.each_with_index do |ids, index| %>
-					<p>
-						<%= index %>
-						<%= ids.room_id %>
-					</p>
-					<% end %>
 					<%= render 'latest_messages' %>
-					<p class="message-index-link"><%= link_to "メッセージ一覧へ", chat_index_user_path(current_user) %></p>				
+					<p class="message-index-link"><%= link_to "メッセージルーム一覧へ", chat_index_user_path(current_user) %></p>				
 				<% end %>
 			</div>
 		</div>

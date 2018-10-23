@@ -1,12 +1,15 @@
 <% microposts.each do |micropost| %>
 	<ul class="micropost-item">
 		<div class="row">
-			<li class="micropost-title">
+			<li class="micropost-title col-md-8">
 				<%= link_to micropost.video_title, micropost.video_url, target: "_blank" %>		
-			</li>	
+			</li>
 			<% if current_user?(User.find(micropost.user_id)) && yield(:title) ==  current_user.name %>
-				<li class="col-md-2 col-md-offset-2"><%= link_to "削除", micropost_path(micropost.id), method: :delete, class: "btn btn-danger", data:{ confirm: "削除してよろしいでしょうか?" } %></li>
+				<li class="col-md-2"><%= link_to "削除", micropost_path(micropost.id), method: :delete, class: "btn btn-danger", data:{ confirm: "削除してよろしいでしょうか?" } %></li>
 			<% end %>
+			<li class="col-md-2 micropost-item-show-link">
+				<%= link_to "投稿へ", micropost_path(micropost) %>
+			</li>
 		</div>
 		<div class="row">
 			<div class="col-md-4">

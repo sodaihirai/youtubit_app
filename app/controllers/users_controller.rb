@@ -34,7 +34,7 @@ class UsersController < ApplicationController
   	@user = User.find(params[:id])
     @microposts = @user.microposts.all
     if current_user?(@user) 
-      @latest_three_room_ids = Message.where(from_id: current_user.id).or(Message.where(to_id: current_user.id)).group(:room_id).order(created_at: :desc).first(3)
+      @latest_three_room_ids = Message.set_latest_room_ids(current_user).first(3)
       @latest_message_each_room = []
       @latest_three_room_ids.count.times do |n|
         @latest_message_each_room << Message.where(room_id: @latest_three_room_ids[n].room_id).last
@@ -83,7 +83,7 @@ class UsersController < ApplicationController
   def chat_index
     @user = User.find(params[:id])
     if current_user?(@user)
-      @latest_room_ids = Message.where(from_id: current_user.id).or(Message.where(to_id: current_user.id)).group(:room_id).order(created_at: :desc)
+      @latest_room_ids = Message.set_latest_room_ids(current_user)
       @latest_message_each_room = []
       @latest_room_ids.count.count.times do |n|
         @latest_message_each_room << Message.where(room_id: @latest_room_ids[n].room_id).last
