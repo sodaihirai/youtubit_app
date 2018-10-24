@@ -13,11 +13,26 @@ Hanako:
   activated_at: <%= Time.zone.now %>
 
 Kazuo:
-  name: Kazuo Yoshida
+  name: Kazuo Yoshi
   email: yoshida@exmaple.com
   password_digest: <%= User.digest("password") %>
   activated: true
   activated_at: <%= Time.zone.now %>
+
+Takuya:
+  name: Takuya Tashiro
+  email: tashiro@example.com
+  password_digest: <%= User.digest("password") %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
+
+Yurie:
+  name: Yurie Shirota
+  email: shirota@example.com
+  password_digest: <%= User.digest("password") %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
+ 
 
 
 <% 30.times do |n| %>

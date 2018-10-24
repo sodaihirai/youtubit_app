@@ -54,4 +54,9 @@ class MicropostTest < ActiveSupport::TestCase
     assert_not @micropost.valid?
   end
 
+  test "likes_count should be presence" do
+    @micropost.likes_count = nil
+    assert_not @micropost.valid?
+  end
+
 end

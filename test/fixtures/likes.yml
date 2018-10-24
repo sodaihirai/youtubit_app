@@ -4,3 +4,47 @@ one:
   user: Taro
   micropost: nice
 
+two:
+  user: Hanako
+  micropost: nice
+
+three:
+  user: Kazuo
+  micropost: nice
+
+four:
+  user: Takuya
+  micropost: nice
+
+five:
+  user: Taro
+  micropost: good
+
+six:
+  user: Hanako
+  micropost: good
+
+seven:
+  user: Kazuo
+  micropost: good
+
+eight:
+  user: Taro
+  micropost: hungry
+
+nine:
+  user: Hanako
+  micropost: hungry
+
+ten:
+  user: Kazuo
+  micropost: hungry2
+
+eleven:
+  user: Takuya
+  micropost: hungry2
+
+thirteen:
+  user: Taro
+  micropost: sleepy
+ 

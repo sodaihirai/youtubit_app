@@ -79,4 +79,53 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_url
   end
 
+  test "should followers redirect when not logged in" do
+    get followers_user_path(@user)
+    assert_redirected_to login_url
+  end
+
+  test "should following redirect when not logged in " do
+    get following_user_path(@user)
+    assert_redirected_to login_url
+  end
+
+  test "index_search redirect when not logged in" do
+    post index_search_users_path, params: { q: "content" }
+    assert_redirected_to login_url
+  end
+
+  test "chat redirect when not logged in" do
+    get chat_user_path(@other)
+    assert_redirected_to login_url
+  end
+
+  test "chat redirect when the template is yourself" do
+    log_in_as(@user)
+    get chat_user_path(@user)
+    assert_redirected_to root_url
+  end
+
+  test "chat work when the template is others" do
+    log_in_as(@user)
+    get chat_user_path(@other)
+    assert_template 'users/chat'
+  end
+
+  test "chat_index redirect when not logged in" do
+    get chat_index_user_path(@user)
+    assert_redirected_to login_url
+  end
+
+  test "chat_index redirect when not correct_user" do
+    log_in_as(@user)
+    get chat_index_user_path(@other)
+    assert_redirected_to root_url
+  end
+
+  test "chat_index work when correct_user" do
+    log_in_as(@user)
+    get chat_index_user_path(@user)
+    assert_template 'users/chat_index'
+  end
+
 end

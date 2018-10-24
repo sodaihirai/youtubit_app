@@ -8,6 +8,7 @@ class User < ApplicationRecord
 	                                  format: { with: VALID_EMAIL_REGEX },
 	                                  uniqueness:  { case_sensitive: false }
 	validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+	validates :follower_count, presence: true
 	has_secure_password
 
 	has_many :microposts, dependent: :destroy
@@ -100,11 +101,11 @@ class User < ApplicationRecord
 	end
 
 	def User.set_third_counts_of_follower_count
-		where.not(follower_count: 0).order(follower_count: :desc).map{ |user| user.follower_count}.uniq.max(3)
+		where.not(follower_count: 0).map{ |user| user.follower_count}.uniq.max(3)
 	end
 
 	def User.set_third_follower_counts_users
-		third_counts_of_follower_count = User.where.not(follower_count: 0).order(follower_count: :desc).map{ |user| user.follower_count}.uniq.max(3).last
+		third_counts_of_follower_count = User.set_third_counts_of_follower_count.last
 		where('follower_count >= ?', third_counts_of_follower_count).order(follower_count: :desc)
 	end
 

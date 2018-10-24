@@ -78,7 +78,11 @@ class UserTest < ActiveSupport::TestCase
   	assert_not @user.valid?
   end
 
-  test "remember_digest should be presence" do
-    
+  test "follower_count should be presence" do
+    @user.follower_count = nil
+    assert @user.valid?
   end
+
+
+  
 end

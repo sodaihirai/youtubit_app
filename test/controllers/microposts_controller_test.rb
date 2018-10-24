@@ -62,4 +62,16 @@ class MicropostsControllerTest < ActionDispatch::IntegrationTest
   	get microposts_path
     assert_redirected_to login_url
   end
+
+  test "index_search redirect when not logged in" do
+    post index_search_microposts_path, params: { q: "hirai", search_version: "noraml", sort_version: "noraml", video_type: "normal" } 
+    assert_redirected_to login_url
+  end
+
+  test "index_search work when logged in" do
+    log_in_as(@user)
+    post index_search_microposts_path, params: { q: "hirai", search_version: "content", sort_version: "like_count", video_type: "スポーツ" }
+    assert_response :success
+    assert_template 'microposts/index'
+  end
 end

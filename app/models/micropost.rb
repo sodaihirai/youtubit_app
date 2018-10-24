@@ -8,6 +8,8 @@ class Micropost < ApplicationRecord
 	validates :user_id, 		presence: true
 	validates :channel_title, 	presence: true
 	validates :channel_url,     presence: true
+	validates :likes_count,     presence: true
+
 	default_scope -> { order(created_at: :desc) }
 	has_many :likes, dependent: :destroy
 	has_many :like_users, through: :likes, source: :user
@@ -69,12 +71,12 @@ class Micropost < ApplicationRecord
 	end
 
 	def self.set_third_counts_of_likes_count
-		Micropost.where.not(likes_count: 0).order(likes_count: :asc).map{ |micropost| micropost.likes_count }.uniq.max(3)
+		Micropost.where.not(likes_count: 0).map{ |micropost| micropost.likes_count }.uniq.max(3)
 	end
 
 	def self.set_third_likes_counts_microposts
-		third_counts_of_likes_count = Micropost.where.not(likes_count: 0).order(likes_count: :asc).map{ |micropost| micropost.likes_count }.uniq.max(3).last
-		Micropost.where('likes_count >= ?', third_counts_of_likes_count).order(likes_count: :desc)
+		third_counts_of_likes_count = Micropost.set_third_counts_of_likes_count.last
+		Micropost.where('likes_count >= ?', third_counts_of_likes_count).unscope(:order).order(likes_count: :desc)
 	end
 
 

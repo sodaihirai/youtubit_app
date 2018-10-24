@@ -3,7 +3,10 @@ require 'test_helper'
 class LikesControllerTest < ActionDispatch::IntegrationTest
   	
 	def setup
+		@user = users(:Yurie)
+		@Taro = users(:Taro)
 		@micropost = microposts(:good)
+		@micropost_nice = microposts(:nice)
 		@like = likes(:one)
 	end
 
@@ -19,5 +22,33 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
 			delete like_path(@like)
 		end
 		assert_redirected_to login_url
+	end
+
+	test "create work" do
+		log_in_as @user
+		assert_difference '@micropost.likes.count', 1 do
+			post likes_path, params: { micropost_id: @micropost.id }
+		end
+	end
+
+	test "create work with ajax" do
+		log_in_as @user
+		assert_difference '@micropost.likes.count', 1 do
+			post likes_path, params: { micropost_id: @micropost.id}, xhr: true
+		end
+	end
+
+	test "destroy work" do
+		log_in_as @Taro
+		assert_difference '@micropost_nice.likes.count', -1 do
+			delete like_path(@like)
+		end
+	end
+
+	test "destroy work with ajax" do
+		log_in_as @Taro
+		assert_difference '@micropost_nice.likes.count', -1 do
+			delete like_path(@like), xhr: true
+		end
 	end
 end
