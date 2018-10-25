@@ -81,7 +81,7 @@ class UsersController < ApplicationController
   end
 
   def chat_index
-      #@set = Message.select(:room_id).distinct.order(created_at: :desc)
+      @set = Message.select(:room_id).distinct.order(created_at: :desc)
       @latest_room_ids = Message.set_latest_room_ids(current_user)
       @latest_message_each_room = []
       @latest_room_ids.count.count.times do |n|

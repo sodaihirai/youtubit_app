@@ -13,12 +13,12 @@ class Message < ApplicationRecord
 	end
 
 	def Message.set_latest_room_ids(user)
-		where("from_id = :user_id OR to_id = :user_id", user_id: user.id).group(:room_id).order(created_at: :desc)
+		where("from_id = :user_id OR to_id = :user_id", user_id: user.id).group(:room_id).order(id: :desc)
 	end
 
 	#def Message.set_latest_room_ids(user)
 	#	set = Message.select(:room_id).distinct.order(created_at: :desc)
-	#	set.where("from_id = :user_id OR to_id = :user_id", user_id: user.id).order(created_at: :desc)
+	#	where("from_id = :user_id OR to_id = :user_id", user_id: user.id).order(created_at: :desc)
 	#end
 
 	def Message.set_latest_room_ids_for_search(chat_users_ids, user)
