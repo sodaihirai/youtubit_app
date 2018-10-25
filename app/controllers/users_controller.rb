@@ -84,7 +84,7 @@ class UsersController < ApplicationController
       #@set = Message.select(:room_id).distinct.order(created_at: :desc)
       @latest_room_ids = Message.set_latest_room_ids(current_user)
       @latest_message_each_room = []
-      @latest_room_ids.count.times do |n|
+      @latest_room_ids.count.count.times do |n|
         @latest_message_each_room << Message.where(room_id: @latest_room_ids[n].room_id).last
       end
   end
