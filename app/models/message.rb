@@ -12,10 +12,6 @@ class Message < ApplicationRecord
 	  where(room_id: room_id).last(500)
 	end
 
-	def Message.set_latest_three_room_ids(user)
-		where(from_id: user.id).or(Message.where(to_id: user.id)).select(:room_id).distinct.order(created_at: :desc).last(3)
-	end
-
 	def Message.set_latest_room_ids(user)
 		where(from_id: user.id).or(Message.where(to_id: user.id)).group(:room_id).order(created_at: :desc)
 	end
