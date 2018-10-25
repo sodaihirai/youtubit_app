@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get :following, :followers, :unsubscribe, :chat, :chat_index
+      post :chat_search
     end
     collection do
       post :index_search

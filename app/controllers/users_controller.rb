@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:edit, :update, :index, :unsubscribe, :destroy, :followers, :following, :index_search, :chat, :chat_index]
-  before_action :correct_user, only: [:edit, :update, :unsubscribe, :destroy, :chat_index]
+  before_action :logged_in_user, only: [:edit, :update, :index, :unsubscribe, :destroy, :followers, :following, :index_search, :chat, :chat_index, :chat_search]
+  before_action :correct_user, only: [:edit, :update, :unsubscribe, :destroy, :chat_index, :chat_index_search, :chat_search]
   before_action :yourself, only: [:chat]
 
   def new
@@ -81,13 +81,24 @@ class UsersController < ApplicationController
   end
 
   def chat_index
-    @user = User.find(params[:id])
-    if current_user?(@user)
       @latest_room_ids = Message.set_latest_room_ids(current_user)
       @latest_message_each_room = []
       @latest_room_ids.count.count.times do |n|
         @latest_message_each_room << Message.where(room_id: @latest_room_ids[n].room_id).last
       end
+  end
+  #ajaxも
+  def chat_search
+    chat_users_ids = User.search_by_user_name(params[:q]).map { |user| user.id }
+    #上をインスタンス変数からローカル変数に直したら、[]が消えた。
+    @latest_room_ids = Message.set_latest_room_ids_for_search(chat_users_ids, current_user)
+    @latest_message_each_room = []
+    @latest_room_ids.count.count.times do |n|
+      @latest_message_each_room << Message.where(room_id: @latest_room_ids[n].room_id).last 
+    end
+    respond_to do |format|
+      format.html { render 'chat_index' }
+      format.js
     end
   end
 

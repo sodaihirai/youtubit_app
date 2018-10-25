@@ -1,2 +1,18 @@
 <h1>メッセージルーム一覧</h1>
-<%= render 'latest_messages' %>
+<div class="row">
+	<div class="col-md-6 col-md-offset-6 search-form-wrapper">
+		<%= form_tag(chat_search_user_path, remote: true) do %>
+			<span class="form-search-anything">
+	 			<%= search_field_tag "q", params[:q], class: "form-control", placeholder: "ユーザー名検索" %>
+			</span>
+			<span class="form-search-anything">
+	 			<%= submit_tag "検索", class: "btn btn-default" %>
+			</span>
+		<% end %>
+	</div>
+</div>
+<div id="chat-search-javascript">
+	<% if !@latest_message_each_room.empty?  %>
+		<%= render 'latest_messages', latest_message_each_room: @latest_message_each_room %>
+	<% end %>
+</div>

@@ -128,4 +128,27 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_template 'users/chat_index'
   end
 
+  test "chat_search redirect when not logged in" do
+    post chat_search_user_path(@user), params: { q: "example" }
+    assert_redirected_to login_url
+  end
+
+  test "chat_search redirect when no correct_user" do
+    log_in_as(@user)
+    post chat_search_user_path(@other), params: { q: "example"}
+    assert_redirected_to root_url
+  end
+
+  test "chat_search work when correct_user" do
+    log_in_as(@user)
+    post chat_search_user_path(@user), params: { q: "example" }
+    assert_template 'users/chat_index'
+  end
+
+  test "chat_search work when correct_user with ajax" do
+    log_in_as(@user)
+    post chat_search_user_path(@user), params: { q: "example"}, xhr: true
+    assert_response :success
+  end
+
 end
