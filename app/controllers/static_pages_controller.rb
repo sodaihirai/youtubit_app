@@ -5,14 +5,14 @@ class StaticPagesController < ApplicationController
 	
 	def home
 		@feeds = current_user.feed if logged_in?
-		@video_title_counts_third = set_video_title_counts_third if any_microposts?
+		@video_title_counts_third = set_video_title_counts_third if Micropost.any?
 		
 		@third_counts_of_likes_count = Micropost.set_third_counts_of_likes_count
 		#ここのデフォルトスコープの影響をキータに投稿する
-		@third_likes_counts_microposts = Micropost.set_third_likes_counts_microposts if any_liked_microposts?
+		@third_likes_counts_microposts = Micropost.set_third_likes_counts_microposts if Like.any?
 
 		@third_counts_of_follower_count = User.set_third_counts_of_follower_count
-		@third_follower_counts_users = User.set_third_follower_counts_users if any_follow?	
+		@third_follower_counts_users = User.set_third_follower_counts_users if Relationship.any?	
 	end
 
 	def about

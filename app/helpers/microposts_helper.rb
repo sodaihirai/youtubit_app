@@ -35,14 +35,6 @@ module MicropostsHelper
 		@micropost_liked_ids = Hash[micropost_like_count.sort_by{ |_, v| -v }].keys
 	end
 
-	def any_liked_microposts?
-		!Micropost.where.not(likes_count: 0).group(:likes_count).max(3).first.nil?
-	end
-
-	def any_microposts?
-		!Micropost.group(:video_title).count.values.uniq.max(3).last.nil?
-	end
-
 	def set_video_title_counts_third
 		micropost_video_title_count = Micropost.group(:video_title).count
 		@third_posted_counts = micropost_video_title_count.values.uniq.max(3)
