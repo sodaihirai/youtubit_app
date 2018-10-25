@@ -1,40 +1,42 @@
-<% microposts.each do |micropost| %>
-	<ul class="micropost-item">
-		<div class="row">
-			<li class="micropost-title col-md-8">
-				<%= link_to micropost.video_title, micropost.video_url, target: "_blank" %>		
-			</li>
-			<% if current_user?(User.find(micropost.user_id)) && yield(:title) ==  current_user.name %>
-				<li class="col-md-2"><%= link_to "削除", micropost_path(micropost.id), method: :delete, class: "btn btn-danger", data:{ confirm: "削除してよろしいでしょうか?" } %></li>
-			<% end %>
-			<li class="col-md-2 micropost-item-show-link">
-				<%= link_to "投稿へ", micropost_path(micropost) %>
-			</li>
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<li><%= image_tag(micropost.video_thumbnail, alt: "thumbnail", class: "thumbnail") %></li>
-				<li>ジャンル:<%= link_to " #{micropost.video_type}", "#" %></li>
-				<li>チャンネル名:<%= link_to " #{micropost.channel_title}", micropost.channel_url, target: "_blank" %></li>
-			</div>
-			<div class="col-md-8">
-				<li>
-					<span>-コメント-</span>
-					<p class="micropost-content"><%= micropost.content %></p>	
+<% if microposts.any? %>
+	<% microposts.each do |micropost| %>
+		<ul class="micropost-item">
+			<div class="row">
+				<li class="micropost-title col-md-8">
+					<%= link_to micropost.video_title, micropost.video_url, target: "_blank" %>		
 				</li>
-				<li>
-					<span>-投稿者-</span>
-					<div class="row">
-					<p class="col-md-6"><%= gravatar_for micropost.contributor, size: 50 %>
-						<%= link_to micropost.contributor.name, user_path(micropost.contributor) %></p>
-					<div class="col-md-2 micropost-like">
-						<%= render 'shared/like_form', micropost: micropost %>
-						<%= render 'shared/like_stats', micropost: micropost %>
-					</div>
-					<div class="col-md-4 micropost-created_at"><%= micropost.created_at %></div>
-					</div>
+				<% if current_user?(User.find(micropost.user_id)) && yield(:title) ==  current_user.name %>
+					<li class="col-md-2"><%= link_to "削除", micropost_path(micropost.id), method: :delete, class: "btn btn-danger", data:{ confirm: "削除してよろしいでしょうか?" } %></li>
+				<% end %>
+				<li class="col-md-2 micropost-item-show-link">
+					<%= link_to "投稿へ", micropost_path(micropost) %>
 				</li>
 			</div>
-		</div>
-	</ul>
+			<div class="row">
+				<div class="col-md-4">
+					<li><%= image_tag(micropost.video_thumbnail, alt: "thumbnail", class: "thumbnail") %></li>
+					<li>ジャンル:<%= link_to " #{micropost.video_type}", "#" %></li>
+					<li>チャンネル名:<%= link_to " #{micropost.channel_title}", micropost.channel_url, target: "_blank" %></li>
+				</div>
+				<div class="col-md-8">
+					<li>
+						<span>-コメント-</span>
+						<p class="micropost-content"><%= micropost.content %></p>	
+					</li>
+					<li>
+						<span>-投稿者-</span>
+						<div class="row">
+						<p class="col-md-6"><%= gravatar_for micropost.contributor, size: 50 %>
+							<%= link_to micropost.contributor.name, user_path(micropost.contributor) %></p>
+						<div class="col-md-2 micropost-like">
+							<%= render 'shared/like_form', micropost: micropost %>
+							<%= render 'shared/like_stats', micropost: micropost %>
+						</div>
+						<div class="col-md-4 micropost-created_at"><%= micropost.created_at %></div>
+						</div>
+					</li>
+				</div>
+			</div>
+		</ul>
+	<% end %>
 <% end %>
