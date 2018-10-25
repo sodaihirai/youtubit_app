@@ -15,8 +15,8 @@ class MicropostsController < ApplicationController
 			youtube_search_list = youtube.list_searches("id,snippet", type: "video",
 																    q: params[:keyword],
 																    max_results: 5)
-			@search_result = youtube_search_list.to_h
-            @movies = @search_result[:items]
+			search_result = youtube_search_list.to_h
+            @movies = search_result[:items]
 			if !@movies.nil?
 				respond_to do |format|
 					format.html { render 'input'}
