@@ -31,7 +31,7 @@ module MicropostsHelper
 	end 
 
 	def set_micropost_liked_ids
-		micropost_like_count = Micropost.joins(:likes).group(:micropost_id).count
+		micropost_like_count = Micropost.joins(:likes).group(:micropost_id).unscope(:order).count
 		@micropost_liked_ids = Hash[micropost_like_count.sort_by{ |_, v| -v }].keys
 	end
 
