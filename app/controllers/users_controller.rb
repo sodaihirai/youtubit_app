@@ -81,7 +81,6 @@ class UsersController < ApplicationController
   end
 
   def chat_index
-      #@set = Message.select('MAX(id) AS max_id').group(:room_id).order(id: :desc)
       @latest_room_ids = Message.set_latest_room_ids(current_user)
       @latest_message_each_room = []
       @latest_room_ids.count.times do |n|

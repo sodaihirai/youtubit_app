@@ -12,10 +12,6 @@ class Message < ApplicationRecord
 	  where(room_id: room_id).last(500)
 	end
 
-	#def Message.set_latest_room_ids(user)
-	#	where("from_id = :user_id OR to_id = :user_id", user_id: user.id).group(:room_id).order(id: :desc)
-	#end
-
 	def Message.set_latest_room_ids(user)
 		set = Message.select('MAX(id) AS max_id').group(:room_id).map { |message| message.max_id }
 		where('id IN (?)', set).order(id: :desc)
