@@ -21,3 +21,7 @@ You can chat with anyone that have account.
 # Other feature
 
 There is the ranking of videos ordered by how many post recommend the video, so this will help you when you are curious to know hot video.
+
+# Let's get started
+
+https://afternoon-refuge-42271.herokuapp.com/
