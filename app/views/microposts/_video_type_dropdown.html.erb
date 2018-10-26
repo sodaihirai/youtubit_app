@@ -6,9 +6,9 @@
     <ul class="dropdown-menu">
       <li><%= link_to "全ジャンル",  microposts_path(sort_version: params[:sort_version], search_version: params[:search_version],
       		 video_type: "全ジャンル") %></li>	
-      <li><%= link_to "スポーツ",  microposts_path(sort_version: params[:sort_version], search_version: params[:search_version],
-      		 video_type: "スポーツ") %></li>	
-      <li><%= link_to "モチベーション", microposts_path(sort_version: params[:sort_version], search_version: params[:search_version],
-      		 video_type: "モチベーション") %></li>
+      <% video_type_array.each do |video_type| %>
+              <li><%= link_to video_type,  microposts_path(sort_version: params[:sort_version], search_version: params[:search_version],
+           video_type: video_type) %></li>
+      <% end %> 
      </ul>
 </div>

@@ -13,8 +13,9 @@
             </a>
             <ul class="dropdown-menu">
               <li><%= link_to "全ての投稿", microposts_path, class: "header-link" %></li>
-              <li><%= link_to "スポーツ", "#", class: "header-link" %></li>
-              <li><%= link_to "モチベーション", "#", class: "header-link" %></li>
+              <% video_type_array.each do |video_type| %>
+                <li><%= link_to video_type, microposts_path(video_type: video_type), class: "header-link" %></li>  
+              <% end %>
             </ul>
          </li>
          <li class="dropdown">

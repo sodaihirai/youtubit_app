@@ -42,4 +42,8 @@ module MicropostsHelper
 		return Hash[video_title_counts.take_while{ |k, v| v >= @third_posted_counts.last }]
 	end
 
+	def video_type_array
+		["スポーツ", "モチベーション", "ミュージック"]
+	end
+
 end

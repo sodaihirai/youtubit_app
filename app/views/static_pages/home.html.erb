@@ -24,7 +24,6 @@
 				<%= render 'shared/like_ranking', third_likes_counts_microposts: @third_likes_counts_microposts, third_counts_of_likes_count:@third_counts_of_likes_count %>
 			</div>
 			<h2>-フォロワー数トップ３</h2>
-			<%= @third_counts_of_follower_count %>
 			<div>
 				<%= render 'shared/follower_ranking' %>
 			</div>
@@ -40,40 +39,6 @@
 				</p>
 			</h1>
 		</div>
-		<div class="intro">
-			<h2 class="intro-title">使い方</h2>
-			<div class="row intro-list intro-upper-list">
-				<div class="intro1 intro-item">
-					<h2>おすすめのyoutubeの動画を投稿しよう</h2>
-					<p class="intro-item-comment">・動画をキーワードで検索</p>
-					<p class="intro-item-comment">・動画に対する感想を記入</p>
-				</div>
-				<div class="intro2 intro-item">
-					<h2>気にいった投稿があったらいいねをしよう</h2>
-					<p class="intro-item-comment">・各投稿の♡ボタンをクリックするだけ</p>
-				</div>
-				<div class="intro3 intro-item">
-					<h2>気になるユーザーがいたらフォローしよう</h2>
-					<p class="intro-item-comment">・面白い投稿をしている人がいたらフォロー</p>
-					<p class="intro-item-comment">・フォローした人の投稿はホーム画面に表示される</p>
-				</div>
-			</div>
-			<div class="row intro-list intro-down-list">
-				<div class="intro4 intro-item">
-					<h2>投稿を検索しよう</h2>
-					<p class="intro-item-comment">・投稿は投稿一覧で確認</p>
-					<p class="intro-item-comment">・検索するときは絞り込み検索で効率アップ</p>
-				</div>
-				<div class="intro5 intro-item">
-					<h2>ランキングをチェックしよう</h2>
-					<p class="intro-item-comment">・投稿数の多い動画、いいね数の多い投稿、フォロー数の多いユーザーが表示されます。</p>
-				</div>
-				<div class="intro6 intro-item">
-					<h2>ユーザー同士でチャットをしよう</h2>
-					<p class="intro-item-comment">・ユーザー同士で誰ともチャットができる</p>
-					<p class="intro-item-comment">・最近のチャット履歴はチャット一覧で確認</p>
-				</div>
-			</div>
-		</div>
+		<%= render 'info' %>
 	</div>
 <% end %>
