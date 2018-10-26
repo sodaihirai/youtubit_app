@@ -1,24 +1,23 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is instruction of this application.
 
-Things you may want to cover:
+# Purpose of this app
 
-* Ruby version
+Have you ever thought that you want watch video that someone recommend?
+At least I have !
+This app may solve this problem.
 
-* System dependencies
+# What you can do
 
-* Configuration
+You can post video you want recommend and watch video someone recommend.
 
-* Database creation
+You can like others's video.
 
-* Database initialization
+You can follow others's account.
 
-* How to run the test suite
+You can chat with anyone that have account.
 
-* Services (job queues, cache servers, search engines, etc.)
+# Other feature
 
-* Deployment instructions
-
-* ...
+There is the ranking of videos ordered by how many post recommend the video, so this will help you when you are curious to know hot video.
