@@ -131,7 +131,7 @@ footer {
 
 /* home */
 .main {
-  height: 600px;
+  height: 400px;
   .title {
     height: 100%;
     width: 100%;
@@ -158,6 +158,33 @@ footer {
 .signup a {
   color: #999999;
 }
+
+.intro-list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.intro-upper-list {
+  margin-bottom: 50px;
+}
+
+.intro-item {
+  width: 25%;
+  border-radius: 5px;
+  background-color: white;
+  h2{
+    font-weight: bold;
+  }
+}
+
+.intro-title {
+  font-size: 35px;
+}
+
+.intro-item-comment{
+  font-size: 13px;
+}
+
 
 /* signup */
 
@@ -334,6 +361,7 @@ div.message_form {
 .micropost-item-show-link {
   margin-top: 13px;
 }
+
 
 
 
