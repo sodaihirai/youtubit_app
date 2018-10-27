@@ -72,8 +72,7 @@ class MicropostsController < ApplicationController
 				@microposts = Micropost.page(params[:page])
 				micropost_search_version_jp
 			elsif params[:sort_version] == "like_count"
-				set_micropost_liked_ids
-				@microposts = Micropost.where(id: @micropost_liked_ids).page(params[:page])
+				@microposts = Micropost.order(likes_count: :desc).page(params[:page])
 				micropost_search_version_jp
 			end
 		else
@@ -81,8 +80,7 @@ class MicropostsController < ApplicationController
 				@microposts = Micropost.where('video_type = ?',params[:video_type]).page(params[:page])
 				micropost_search_version_jp
 			elsif params[:sort_version] == "like_count"
-				set_micropost_liked_ids
-				@microposts = Micropost.where('id IN (?) AND video_type = ?', @micropost_liked_ids, params[:video_type]).page(params[:page])
+				@microposts = Micropost.where('video_type = ?', params[:video_type]).order(likes_count: :desc).page(params[:page])
 				micropost_search_version_jp
 			end
 		end
@@ -99,9 +97,8 @@ class MicropostsController < ApplicationController
 			    end
 				micropost_search_version_jp
 			elsif params[:sort_version] == "like_count"
-				set_micropost_liked_ids
 			    params[:search_version].empty? ? search_version = "content" : search_version = params[:search_version]
-			    @microposts = Micropost.search_by_parameter_sort_by_like_with_pagination(search_version, params[:q], @micropost_liked_ids, params[:page])
+			    @microposts = Micropost.search_by_parameter_sort_by_like_with_pagination(search_version, params[:q], params[:page])
 			    respond_to do |format|
 					format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
 					format.js
@@ -118,9 +115,8 @@ class MicropostsController < ApplicationController
 			    end
 				micropost_search_version_jp			   
 			elsif params[:sort_version] == "like_count"
-				set_micropost_liked_ids
 				params[:search_version].empty? ? search_version = "content" : search_version = params[:search_version]
-				@microposts = Micropost.search_by_parameter_sort_by_like_and_video_type_with_pagination(search_version, params[:q], @micropost_liked_ids, params[:video_type], params[:page])
+				@microposts = Micropost.search_by_parameter_sort_by_like_and_video_type_with_pagination(search_version, params[:q], params[:video_type], params[:page])
 			    respond_to do |format|
 					format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
 					format.js
