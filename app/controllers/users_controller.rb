@@ -75,9 +75,10 @@ class UsersController < ApplicationController
   end
 
   def chat
-      @user = User.find(params[:id])
       @room_id = message_room_id(current_user, @user)
       @messages = Message.recent_in_room(@room_id)
+      unread_messages = @user.from_messages.where('to_id = ? AND read = ?', current_user.id, false)
+      unread_messages.update_all(read: true)
   end
 
   def chat_index
