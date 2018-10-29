@@ -38,6 +38,14 @@ class Micropost < ApplicationRecord
 		likes.build(user_id: user.id)
 	end
 
+	def self.index_with_likes_count
+		unscope(:order).order(likes_count: :desc, created_at: :desc)
+	end
+
+	def self.index_with_likes_count_and_video_type
+		where('video_type = ?', params[:video_type]).unscope(:order).order(likes_count: :desc, created_at: :desc)
+	end
+
 	def self.search_by_parameter_with_pagination(search_version, keyword, params_page)
 		if keyword.empty?
 			page(params_page)
@@ -50,7 +58,7 @@ class Micropost < ApplicationRecord
 		if keyword.empty?
 			order(likes_count: :desc).page(params_page)
 		else
-			search_by_parameter(search_version, keyword).order(likes_count: :desc).page(params_page)
+			search_by_parameter(search_version, keyword).unscope(:order).order(likes_count: :desc, created_at: :desc).page(params_page)
 		end
 	end
 
@@ -66,7 +74,7 @@ class Micropost < ApplicationRecord
 		if keyword.empty?
 			where('video_type = ?', video_type).order(likes_count: :desc).page(params_page)
 		else
-			search_by_parameter_sort_by_video_type(search_version, keyword, video_type).order(likes_count: :desc).page(params_page)
+			search_by_parameter_sort_by_video_type(search_version, keyword, video_type).unscope(:order).order(likes_count: :desc, created_at: :desc).page(params_page)
 		end
 	end
 

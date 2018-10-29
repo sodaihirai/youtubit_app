@@ -71,16 +71,16 @@ class MicropostsController < ApplicationController
 			if params[:sort_version].nil? || params[:sort_version] == "post_created_at"
 				@microposts = Micropost.page(params[:page])
 				micropost_search_version_jp
-			elsif params[:sort_version] == "like_count"
-				@microposts = Micropost.order(likes_count: :desc).page(params[:page])
+			elsif params[:sort_version] == "likes_count"
+				@microposts = Micropost.index_with_likes_count.page(params[:page])
 				micropost_search_version_jp
 			end
 		else
 			if params[:sort_version].nil? || params[:sort_version] == "post_created_at"
 				@microposts = Micropost.where('video_type = ?',params[:video_type]).page(params[:page])
 				micropost_search_version_jp
-			elsif params[:sort_version] == "like_count"
-				@microposts = Micropost.where('video_type = ?', params[:video_type]).order(likes_count: :desc).page(params[:page])
+			elsif params[:sort_version] == "likes_count"
+				@microposts = Micropost.index_with_likes_count_and_video_type_with_pagination.page(params[:page])
 				micropost_search_version_jp
 			end
 		end
@@ -96,7 +96,7 @@ class MicropostsController < ApplicationController
 					format.js
 			    end
 				micropost_search_version_jp
-			elsif params[:sort_version] == "like_count"
+			elsif params[:sort_version] == "likes_count"
 			    params[:search_version].empty? ? search_version = "content" : search_version = params[:search_version]
 			    @microposts = Micropost.search_by_parameter_sort_by_like_with_pagination(search_version, params[:q], params[:page])
 			    respond_to do |format|
@@ -114,7 +114,7 @@ class MicropostsController < ApplicationController
 					format.js
 			    end
 				micropost_search_version_jp			   
-			elsif params[:sort_version] == "like_count"
+			elsif params[:sort_version] == "likes_count"
 				params[:search_version].empty? ? search_version = "content" : search_version = params[:search_version]
 				@microposts = Micropost.search_by_parameter_sort_by_like_and_video_type_with_pagination(search_version, params[:q], params[:video_type], params[:page])
 			    respond_to do |format|

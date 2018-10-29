@@ -6,7 +6,7 @@
     <ul class="dropdown-menu">
       <li><%= link_to "投稿日順",  microposts_path(sort_version: "post_created_at", search_version: params[:search_version],
       		video_type: params[:video_type]) %></li>	
-      <li><%= link_to "いいね数順", microposts_path(sort_version: "like_count", search_version: params[:search_version],
+      <li><%= link_to "いいね数順", microposts_path(sort_version: "likes_count", search_version: params[:search_version],
       		 video_type: params[:video_type]) %></li>
      </ul>
 </div>
