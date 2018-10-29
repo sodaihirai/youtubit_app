@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'redis', '4.0.2'
 gem 'google-api-client', '~> 0.11'
 gem "letter_opener", :group => :development
 gem 'bootsnap'
