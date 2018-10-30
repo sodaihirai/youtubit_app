@@ -47,7 +47,7 @@ class MicropostsController < ApplicationController
 		@micropost = current_user.microposts.build(micropost_params)
 		if @micropost.save
 			flash.now[:success] = "投稿に成功しました。"
-			redirect_to current_user
+			redirect_to root_url
 		else
 			create_variable_set
 			render 'new'
@@ -80,7 +80,7 @@ class MicropostsController < ApplicationController
 				@microposts = Micropost.where('video_type = ?',params[:video_type]).page(params[:page])
 				micropost_search_version_jp
 			elsif params[:sort_version] == "likes_count"
-				@microposts = Micropost.index_with_likes_count_and_video_type_with_pagination.page(params[:page])
+				@microposts = Micropost.index_with_likes_count_and_video_type(params[:video_type]).page(params[:page])
 				micropost_search_version_jp
 			end
 		end

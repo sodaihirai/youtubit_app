@@ -42,8 +42,8 @@ class Micropost < ApplicationRecord
 		unscope(:order).order(likes_count: :desc, created_at: :desc)
 	end
 
-	def self.index_with_likes_count_and_video_type
-		where('video_type = ?', params[:video_type]).unscope(:order).order(likes_count: :desc, created_at: :desc)
+	def self.index_with_likes_count_and_video_type(video_type)
+		where('video_type = ?', video_type).unscope(:order).order(likes_count: :desc, created_at: :desc)
 	end
 
 	def self.search_by_parameter_with_pagination(search_version, keyword, params_page)
