@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:edit, :update, :index, :unsubscribe, :destroy, :followers, :following, :index_search, :chat, :chat_index, :chat_search]
+  before_action :logged_in_user, only: [:edit, :update, :show, :index, :unsubscribe, :destroy, :followers, :following, :index_search, :chat, :chat_index, :chat_search]
   before_action :correct_user, only: [:edit, :update, :unsubscribe, :destroy, :chat_index, :chat_index_search, :chat_search]
   before_action :yourself, only: [:chat]
 
