@@ -70,8 +70,7 @@ class MicropostsControllerTest < ActionDispatch::IntegrationTest
 
   test "index_search work when logged in" do
     log_in_as(@user)
-    post index_search_microposts_path, params: { q: "hirai", search_version: "content", sort_version: "like_count", video_type: "スポーツ" }
-    assert_response :success
+    post index_search_microposts_path, params: { q: "hirai", search_version: "content", sort_version: "likes_count", video_type: "スポーツ" }
     assert_template 'microposts/index'
   end
 end

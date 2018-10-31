@@ -52,7 +52,7 @@ class MicropostFlowTest < ActionDispatch::IntegrationTest
   	assert_equal channel_title, @micropost.channel_title
   	assert_equal video_url, @micropost.video_url
   	assert_not flash.empty?
-  	assert_redirected_to @user
+  	assert_redirected_to root_url
   	follow_redirect!
   	#投稿情報がviewに反映されている確認
   	assert_match @micropost.content, response.body

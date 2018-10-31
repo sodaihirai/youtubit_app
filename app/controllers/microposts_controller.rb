@@ -91,37 +91,37 @@ class MicropostsController < ApplicationController
 			if params[:sort_version].empty? || params[:sort_version] == "post_created_at"
 				params[:search_version].empty? ? search_version = "content" : search_version = params[:search_version]
 			    @microposts = Micropost.search_by_parameter_with_pagination(search_version, params[:q], params[:page])
+				micropost_search_version_jp
 			    respond_to do |format|
 					format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
 					format.js
 			    end
-				micropost_search_version_jp
 			elsif params[:sort_version] == "likes_count"
 			    params[:search_version].empty? ? search_version = "content" : search_version = params[:search_version]
 			    @microposts = Micropost.search_by_parameter_sort_by_like_with_pagination(search_version, params[:q], params[:page])
+				micropost_search_version_jp			   
 			    respond_to do |format|
 					format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
 					format.js
 			    end
-				micropost_search_version_jp			   
 			end
 		else 
 			if params[:sort_version].empty? || params[:sort_version] == "post_created_at"
 				params[:search_version].empty? ? search_version = "content" : search_version = params[:search_version]
 				@microposts = Micropost.search_by_parameter_sort_by_video_type_with_pagination(search_version, params[:q], params[:video_type], params[:page])
+				micropost_search_version_jp			   
 			    respond_to do |format|
 					format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
 					format.js
 			    end
-				micropost_search_version_jp			   
 			elsif params[:sort_version] == "likes_count"
 				params[:search_version].empty? ? search_version = "content" : search_version = params[:search_version]
 				@microposts = Micropost.search_by_parameter_sort_by_like_and_video_type_with_pagination(search_version, params[:q], params[:video_type], params[:page])
+				micropost_search_version_jp			   
 			    respond_to do |format|
 					format.html { render 'index', search_version: params[:search_version], sort_version: params[:sort_version], video_type: params[:video_type] }
 					format.js
 			    end
-				micropost_search_version_jp			   
 			end
 		end
 	end
