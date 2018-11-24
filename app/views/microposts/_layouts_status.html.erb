@@ -1,0 +1,28 @@
+<% if params[:video_type].nil? %>
+	<p>ジャンル: 全ジャンル</p>
+<% else %>
+	<p>ジャンル: <%= params[:video_type] %></p>
+<% end %> 
+
+<% if params[:sort_version].nil? %>
+	<p>フィルター: 投稿日順</p>
+<% else %>
+	<% if params[:sort_version] == "post_created_at" %>
+		<p>フィルター: 投稿日順</p>
+	<% elsif params[:sort_version] == "likes_count" %>
+		<p>フィルター: いいね数順</p>
+	<% end %>
+<% end %> 
+
+<% if params[:search_version].nil? %>
+	<p>検索メニュー: コメント検索</p>
+<% else %>
+	<% if params[:search_version] == "content" %>
+		<p>検索メニュー: コメント検索</p>
+	<% elsif params[:search_version] == "video_title" %>
+		<p>検索メニュー: タイトル検索</p>
+	<% elsif params[:search_version] == "channel_title" %>
+		<p>検索メニュー: チャンネルタイトル検索</p>
+	<% end %>
+<% end %> 
+
