@@ -54,7 +54,7 @@ class User < ApplicationRecord
 	end
 
 	def downcase_email
-		self.email = self.email.downcase
+		self.email = self.email.downcase unless self.email.nil?
 	end
 
 	def authenticated?(action, token)
