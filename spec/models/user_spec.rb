@@ -63,6 +63,12 @@ RSpec.describe User, type: :model do
 		expect(other.errors[:email]).to include "has already been taken"
 	end
 
+	it "'s email in database should be downcase" do
+		email = "ExaMple.Com@Exmaple.CoM"
+		@user.update_attribute(:email, email)
+		expect(@user.reload.email).to eq email.downcase
+	end
+
 	it "is invalid without password" do
 		@user.update_attribute(:password, nil)
 		@user.valid?
@@ -74,9 +80,13 @@ RSpec.describe User, type: :model do
 		@user.update_attribute(:password, password)
 		@user.valid?
 		expect(@user.errors[:password]).to include "is too short (minimum is 6 characters)"
+		puts @user.inspect
 	end
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> test_models_with_rspec
 end
