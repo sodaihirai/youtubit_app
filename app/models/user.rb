@@ -94,10 +94,7 @@ class User < ApplicationRecord
   	end	
 
 	def password_reset_expired?
-		if self.reset_sent_at < 2.hours.ago
-		　　flash[:warning] = "パスワード変更リンクが期限切れです"
-			redirect_to new_password_reset_path
-		end
+		self.reset_sent_at < 2.hours.ago
 	end
 
 	def User.set_third_counts_of_follower_count

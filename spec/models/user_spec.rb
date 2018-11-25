@@ -80,6 +80,46 @@ RSpec.describe User, type: :model do
 		@user.update_attribute(:password, password)
 		@user.valid?
 		expect(@user.errors[:password]).to include "is too short (minimum is 6 characters)"
-		puts @user.inspect
+	end
+
+	it "creates remember_digest and forget remember_digest" do
+		@user.remember
+		expect(@user.remember_digest).to_not eq nil
+		@user.forget
+		expect(@user.remember_digest).to eq nil
+	end
+
+	it "creates activation_digest" do
+		@user.activate
+		expect(@user.activation_digest).to_not eq nil
+	end
+
+	it "creates reset digest" do
+		@user.create_reset_digest
+		expect(@user.reset_digest).to_not eq nil
+	end
+
+
+	describe "authenticate each digest by token" do
+
+		it "return true authenticate remember_digest" do
+			@user.remember
+			expect(@user.authenticated?("remember", @user.remember_token)).to be true
+		end
+
+		it "return true authenticate activation_digest" do
+			@user.activate
+			expect(@user.authenticated?("activation", @user.activation_token)).to be true
+		end
+
+		it "return true authenticate reset_digest" do
+			@user.create_reset_digest
+			expect(@user.authenticated?("reset", @user.reset_token)).to be true
+		end
+	end
+
+	it "returns true when reset mail is expired" do
+		@user.update_attribute(:reset_sent_at, 3.hours.ago)
+		expect(@user.password_reset_expired?).to be true
 	end
 end
