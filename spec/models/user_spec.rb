@@ -147,4 +147,22 @@ RSpec.describe User, type: :model do
 			end
 		end
 	end
+
+	it "follow some user" do
+		user1 = FactoryBot.create(:user)
+		user2 = FactoryBot.create(:user)
+
+		expect {
+			user1.follow(user2)
+		}.to change(user1.active_relationships, :count).by(1)
+	end
+
+	it "unfollow some user" do
+		relationship = FactoryBot.create(:relationship)
+		follower = relationship.follower
+		followed = relationship.followed
+		expect {
+			follower.unfollow(relationship.id)
+		}.to change(follower.active_relationships, :count).by(-1)
+	end
 end

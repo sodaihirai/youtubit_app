@@ -55,6 +55,10 @@ class UsersController < ApplicationController
   end
 
   def unsubscribe
+    @user.destroy
+    session.delete(:user_id)
+    flash[:success] = "アカウントを削除しました"
+    redirect_to root_url
   end
 
   def destroy
