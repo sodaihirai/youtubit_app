@@ -4,7 +4,6 @@ class RelationshipsController < ApplicationController
 	def create
 		@user = User.find(params[:followed_id])
 		current_user.follow(@user)
-		RelationMailer.follow(current_user, @user).deliver_now
 		respond_to do |format|
 			format.html { redirect_to @user }
 			format.js
@@ -15,7 +14,6 @@ class RelationshipsController < ApplicationController
 		relationship = Relationship.find(params[:id])
 		@user = User.find(relationship.followed_id)
 		current_user.active_relationships.find(params[:id]).destroy
-		RelationMailer.unfollow(current_user, @user).deliver_now
 		respond_to do |format|
 			format.html { redirect_to @user }
 			format.js
