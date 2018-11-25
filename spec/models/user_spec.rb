@@ -143,7 +143,7 @@ RSpec.describe User, type: :model do
 
 		context "when no match is found" do
 			it "returns empty when no match is found" do
-				expect(User.search_by_user_name("rota")).to_not be_empty
+				expect(User.search_by_user_name("rota")).to be_empty
 			end
 		end
 	end
