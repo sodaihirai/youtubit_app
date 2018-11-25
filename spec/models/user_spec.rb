@@ -123,4 +123,28 @@ RSpec.describe User, type: :model do
 		expect(@user.password_reset_expired?).to be true
 	end
 
+	describe "search user for a term" do
+
+		before do
+			@user1 = FactoryBot.create(:user)
+			@user2 = FactoryBot.create(:user, :taro_yoshida)
+			@user3 = FactoryBot.create(:user, :hanako_ikeda)
+		end
+
+		context "when a match is found" do
+			it "returns users that match the term" do
+				expect(User.search_by_user_name("taro")).to include(@user1, @user2)
+			end
+
+			it "does not return that does not match the term" do
+				expect(User.search_by_user_name("taro")).to_not include(@user3)
+			end
+		end
+
+		context "when no match is found" do
+			it "returns empty when no match is found" do
+				expect(User.search_by_user_name("rota")).to be_empty
+			end
+		end
+	end
 end
