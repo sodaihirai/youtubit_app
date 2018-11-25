@@ -82,11 +82,4 @@ RSpec.describe User, type: :model do
 		expect(@user.errors[:password]).to include "is too short (minimum is 6 characters)"
 		puts @user.inspect
 	end
-
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> test_models_with_rspec
 end
