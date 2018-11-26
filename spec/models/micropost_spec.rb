@@ -166,4 +166,13 @@ RSpec.describe Micropost, type: :model do
 		micropost = FactoryBot.create(:micropost, user: user)
 		expect(micropost.contributor).to eq user
 	end
+
+	it "depends on user" do
+		user = FactoryBot.create(:user)
+		micropost = FactoryBot.create(:micropost, user: user)
+		counts = user.microposts.count
+		expect {
+			user.destroy
+		}.to change(user.microposts, :count).by(-counts)
+	end
 end

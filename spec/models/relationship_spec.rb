@@ -21,4 +21,22 @@ RSpec.describe Relationship, type: :model do
 		@relationship.valid?
 		expect(@relationship.errors[:followed_id]).to include("can't be blank")
 	end
+
+	it "depends on follower" do
+		follower = FactoryBot.create(:user)
+		followed = FactoryBot.create(:user)
+		relationship = FactoryBot.create(:relationship, follower: follower, followed: followed)
+		expect {
+			follower.destroy
+		}.to change(Relationship, :count).by(-1)
+	end
+
+	it "depends on followed" do
+		follower = FactoryBot.create(:user)
+		followed = FactoryBot.create(:user)
+		relationship = FactoryBot.create(:relationship, follower: follower, followed: followed)
+		expect {
+			followed.destroy
+		}.to change(Relationship, :count).by(-1)
+	end
 end
