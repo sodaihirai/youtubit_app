@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   #get '/unsubscribe', to: 'users#unsubscribe'
   resources :users do
     member do
-      get :following, :followers, :unsubscribe, :chat, :chat_index
+      get :following, :followers, :unsubscribe, :chat, :chat_index, :notification
       post :chat_search
     end
     collection do

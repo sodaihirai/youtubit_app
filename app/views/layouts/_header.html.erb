@@ -7,6 +7,7 @@
         <% if logged_in? %>
           <li><%= link_to "ユーザー一覧",users_path, class: "header-link" %></li>
           <li><%= link_to "投稿" ,input_microposts_path, class: "header-link" %></li>
+          <li><%= link_to "通知", notification_user_path(current_user), class: "header-link" %></li>
          <li class="dropdown">
             <a href="#" class="dropdown-toggle header-link" data-toggle="dropdown">
               投稿一覧 <b class="caret"></b>

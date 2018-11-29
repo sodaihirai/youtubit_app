@@ -1,0 +1,8 @@
+<h1>notification</h1>
+<% @notifications.each do | notification| %>
+	<% if notification.action_type == "follow" %>
+		<p><%= link_to User.find(notification.action_user_id).name, user_path(User.find(notification.action_user_id)) %>さんが<%= link_to User.find(notification.type_id).name, user_path(User.find(notification.type_id))%>さんをフォローしました </p>
+	<% elsif notification.action_type == "like" %>
+	 	<p><%= link_to User.find(notification.action_user_id).name, user_path(User.find(notification.action_user_id)) %>さんが<%= link_to User.find(Micropost.find(notification.type_id).user_id).name, user_path(User.find(Micropost.find(notification.type_id).user_id)) %>さんの<%= link_to "#{Micropost.find(notification.type_id).video_title}という動画に対する投稿", micropost_path(Micropost.find(notification.type_id)) %>にいいねをしました。</p>
+	 <% end %>
+<% end %>

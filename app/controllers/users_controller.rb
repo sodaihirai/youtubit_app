@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:edit, :update, :show, :index, :unsubscribe, :destroy, :followers, :following, :index_search, :chat, :chat_index, :chat_search]
-  before_action :correct_user, only: [:edit, :update, :unsubscribe, :destroy, :chat_index, :chat_index_search, :chat_search]
+  before_action :logged_in_user, only: [:edit, :update, :show, :index, :unsubscribe, :destroy, :followers, :following, :index_search, :chat, :chat_index, :chat_search, :notification]
+  before_action :correct_user, only: [:edit, :update, :unsubscribe, :destroy, :chat_index, :chat_index_search, :chat_search, :notification]
   before_action :yourself, only: [:chat]
 
   def new
@@ -105,6 +105,16 @@ class UsersController < ApplicationController
       format.html { render 'chat_index' }
       format.js
     end
+  end
+
+  def notification
+    follower_ids = @user.followers.map { |follower| follower.id }
+    @notifications = []
+    follower_ids.each do | follower_id |
+      notification = Action.where(action_user_id: follower_id)
+      @notifications << notification
+    end
+      @notifications.flatten!
   end
 
   private
