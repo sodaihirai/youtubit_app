@@ -33,5 +33,5 @@ class LikesController < ApplicationController
 			redirect_to microposts_path
 		end
 	end
-
+	
 end
