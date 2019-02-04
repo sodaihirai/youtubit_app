@@ -20,6 +20,7 @@ class Message < ApplicationRecord
 	def Message.set_latest_room_ids_for_search(chat_users_ids, user)
 		where("(from_id IN (:chat_users_ids) AND to_id = :user_id) OR (to_id IN (:chat_users_ids) AND from_id = :user_id)", chat_users_ids: chat_users_ids, user_id: user.id).group(:room_id).order(created_at: :desc)
 	end
+
 	
 	def hiraisoudai
 	
@@ -36,4 +37,10 @@ class Message < ApplicationRecord
 	def dalkjfalsdkjf
 
 	end
+
+
+	def adlkjfa
+	
+	end
+
 end
