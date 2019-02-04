@@ -28,4 +28,12 @@ class Message < ApplicationRecord
 	def hiraisoudaidesugananika
 		
 	end
+
+	def adjf
+	
+	end
+
+	def dalkjfalsdkjf
+
+	end
 end
