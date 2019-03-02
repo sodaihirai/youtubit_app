@@ -1,0 +1,7 @@
+item1:
+  - path: /contents/test/
+    image_path: /lib/images/test.jpg
+    title: テスト
+  - path: /contents/test1/
+    image_path: /lib/images/test.jpg
+    title: 徹夜

@@ -29,6 +29,15 @@
 			</div>
 		</div>
 	</div>
+	<div>
+		<%= front_banner(:item1) %>
+		<% front_banner(:item1).each do | item | %>
+			<%= item['path'] %>
+		<% end %>
+		<% tests =  front_banner(:item1) %>
+		<%= render partial: 'test', collection: tests, as: :item %>
+		<%= front_banner(:item1).count %>
+	</div>
 <% else %>
 	<div class="row">
 		<div class="main">

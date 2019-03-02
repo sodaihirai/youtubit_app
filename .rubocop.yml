@@ -1,0 +1,13 @@
+#コメントに日本語を許可
+Style/AsciiComments:
+  Enabled: false
+
+#tab detectedをfalse
+Layout/Tab:
+  Enabled: false
+
+Layout/IndentationWidth:
+  Enabled: false
+
+Layout/LeadingCommentSpace:
+  Enabled: false

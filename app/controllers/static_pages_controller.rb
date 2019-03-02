@@ -2,8 +2,11 @@ class StaticPagesController < ApplicationController
 
 	include UsersHelper
 	include MicropostsHelper
+
+	require '/Users/hiraisodai/Projects/youtubit_app/lib/content_data/content_loader.rb'
 	
 	def home
+		ContentLoader.load!
 		@feeds = current_user.feed if logged_in?
 		@video_title_counts_third = set_video_title_counts_third if Micropost.any?
 		

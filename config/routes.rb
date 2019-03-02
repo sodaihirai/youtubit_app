@@ -40,5 +40,7 @@ Rails.application.routes.draw do
   #likes
   resources :likes, only: [:create, :destroy]
 
+  get '/contents/test', to: 'contents#test'
+
   mount ActionCable.server => '/cable'
 end

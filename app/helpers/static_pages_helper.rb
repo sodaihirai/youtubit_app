@@ -18,4 +18,8 @@ module StaticPagesHelper
 	def video_thumbnail(video_title)
 		Micropost.find_by(video_title: video_title).video_thumbnail
 	end
+
+	def front_banner(kind)
+		content_data('/test/test', attr: kind)
+	end
 end
