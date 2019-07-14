@@ -23,6 +23,7 @@ gem "rubocop"
 gem 'pry-rails'
 gem 'pry-byebug'
 gem 'pry-doc'
+gem 'draper'
 
 group :development, :test do
   gem 'sqlite3', '1.3.13'

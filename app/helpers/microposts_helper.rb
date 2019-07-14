@@ -16,10 +16,6 @@ module MicropostsHelper
 		@channel_url     = params[:micropost][:channel_url]
 	end
 
-	def like?(micropost)
-		!micropost.likes.find_by(user_id: current_user.id).nil?
-	end
-
 	def micropost_search_version_jp
 		if params[:search_version].nil? || params[:search_version] == "content"
 			@search_version_jp = "コメント"
